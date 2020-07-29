@@ -1,16 +1,4 @@
-# fluttertest
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# 2020-7-29 初次提交内容
+1.config 结构（模块化）、配置（语义划）、用法（导入和使用方法）
+2.Provide用法，类似vue里面的store，配合config来分模块使用全局变量
+3.主页代码编写
