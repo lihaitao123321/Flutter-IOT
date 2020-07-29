@@ -4,5 +4,5 @@
 3.Provide用法，类似vue里面的store，配合config来分模块使用全局变量  
 4.接口封装，基于dio的封装  
 5.rsa加密，基于encrypt非对称加密封装  
-6.主页代码编写
+6.主页代码编写，Scaffold组件使用
 
