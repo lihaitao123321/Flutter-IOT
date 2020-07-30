@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../config/index.dart';
-import '../service/http_service.dart';
+import '../../config/index.dart';
+import '../../service/http_service.dart';
 import 'dart:convert';
 class HomePage extends StatefulWidget{
   _HomePageState createState() => _HomePageState();

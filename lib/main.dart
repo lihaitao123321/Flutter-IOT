@@ -3,7 +3,7 @@ import './config/index.dart';
 
 import 'package:provide/provide.dart';
 import './provide/currnet_index_provide.dart';
-import './pages/index_page.dart';
+import './pages/logins/login_page.dart';
 
 void main(){
   var currentIndexProvide = CurrentIndexProvide();
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primaryColor: KColor.primaryColor,
           ),
-          home:  IndexPage()
+          home:  LoginPage()
       )
     );
   }

@@ -1,7 +1,7 @@
 import 'package:charge/config/index.dart';
 import 'package:charge/pages/category_page.dart';
 import 'package:flutter/material.dart';
-import 'home_page.dart';//首页
+import './homes/home_page.dart';//首页
 import 'category_page.dart';//分类
 import 'cart_page.dart';//购物车
 import 'member_page.dart';//会员中心
