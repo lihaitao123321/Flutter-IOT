@@ -11,9 +11,9 @@ class _LoginPageState extends State<LoginPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: KColor.backgroundColor,
-      appBar: new AppBar(
-        title: Text('登录'),
-      ),
+      // appBar: new AppBar(
+      //   title: Text('登录'),
+      // ),
       body: FutureBuilder(
         // future: request('login'),//接口调用
         builder: (context, snapshot){
@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage>{
             child: Column(
               children: <Widget>[
                 Container(
-                  height: 250,
+                  height: 260,
                   child: Center(
                     child: Image(
                       width: 100,
@@ -81,6 +81,7 @@ class _LoginPageState extends State<LoginPage>{
                         ])
                       ),
                       Container(
+                        margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
                         decoration: BoxDecoration(
                             border: Border(
                               bottom: BorderSide(
@@ -112,6 +113,36 @@ class _LoginPageState extends State<LoginPage>{
                           ))
                         ])
                       ),
+                      Container(
+                        width: 400,
+                        height: 44,
+                        margin: EdgeInsets.fromLTRB(0, 55, 0, 0),
+                        child: RaisedButton(
+                          color:KColor.primaryColor,
+                          textColor:Colors.white,
+                          child: Text('登录'),
+                          onPressed:()=>{
+
+                          },
+                        )
+                      ),
+                      Container(
+                        width: 400,
+                        margin: EdgeInsets.fromLTRB(0, 26, 0, 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              '忘记密码？',
+                              style: new TextStyle(color: KColor.disabledColor),
+                            ),
+                            Text(
+                              '新用户注册>',
+                              style: new TextStyle(color: KColor.primaryColor),
+                            )
+                          ],
+                        )
+                      )
                   ]))
                 ),
               ],
