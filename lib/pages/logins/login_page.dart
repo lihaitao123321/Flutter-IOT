@@ -1,12 +1,59 @@
+import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:charge/config/color.dart';
-import 'package:flutter/material.dart';
+import 'package:charge/service/http_service.dart';
+import 'package:charge/tools/tools.dart';
+import 'package:charge/components/loading.dart';
+import 'package:charge/components/toast.dart';
+import 'package:charge/pages/index_page.dart';
 
-class LoginPage extends StatefulWidget{
-
-    _LoginPageState createState() => _LoginPageState();
+class LoginPage extends StatefulWidget {
+  _LoginPageState createState() => _LoginPageState();
 }
-class _LoginPageState extends State<LoginPage>{
+
+class _LoginPageState extends State<LoginPage> {
+  String phone = '17630378060';
+  String pwd = '123321';
+
+  void _togglePhoneChange(text) {
+    setState(() {
+      phone = text;
+    });
+  }
+
+  void _togglePasswordChange(text) {
+    setState(() {
+      pwd = text;
+    });
+  }
+
+  void _login() async {
+    Loading loading = Loading(context);
+    loading.show();
+    String password = await KRsa.encryption(pwd);
+    KToast toast = KToast();
+    // ignore: missing_return
+    request('login', {"telephone": phone, "passwd": password}).then((res) {
+      print(res.toString());
+      loading.close();
+      // if (res.status == "1") {
+      //   toast.error("账号或密码错误");
+      //   return false;
+      // }
+      if (res.statusCode == 200) {
+        toast.success("登录成功");
+        Future.delayed(Duration(milliseconds: 1000), () {
+          Navigator.push(context,
+              new MaterialPageRoute(builder: (context) => new IndexPage()));
+        });
+      } else {
+        toast.warning("当前用户未绑定所属公司，请联系管理员!");
+        return false;
+      }
+    });
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,117 +63,93 @@ class _LoginPageState extends State<LoginPage>{
       // ),
       body: FutureBuilder(
         // future: request('login'),//接口调用
-        builder: (context, snapshot){
-          if(snapshot.hasData){
-              var data = json.decode(snapshot.data.toString());
-              // print(data);
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            var data = json.decode(snapshot.data.toString());
+            print(data);
           }
-          final controller = TextEditingController();
-          controller.addListener(() {
-            print('input ${controller.text}');
-          });
-          final controller1 = TextEditingController();
-          controller1.addListener(() {
-            print('input ${controller.text}');
-          });
+
           return Container(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  height: 260,
-                  child: Center(
-                    child: Image(
+              child: Column(
+            children: <Widget>[
+              Container(
+                height: 260,
+                child: Center(
+                  child: Image(
                       width: 100,
                       height: 100,
                       fit: BoxFit.cover,
-                      image: AssetImage('asset/images/girl.jpeg')
-                    ),
-                  ),
+                      image: AssetImage('asset/images/girl.jpeg')),
                 ),
-                Padding(
+              ),
+              Padding(
                   padding: EdgeInsets.fromLTRB(38, 0, 38, 0),
                   child: Container(
-
-                    child: Column(children: <Widget>[
-                      Container(
+                      child: Column(children: <Widget>[
+                    Container(
                         decoration: BoxDecoration(
                             border: Border(
-                              bottom: BorderSide(
-                                style: BorderStyle.solid,
-                                width: 1,
-                                color: Color.fromRGBO(0, 0, 0, 0.1)
-                              ),
-                            )
-                        ),
+                          bottom: BorderSide(
+                              style: BorderStyle.solid,
+                              width: 1,
+                              color: Color.fromRGBO(0, 0, 0, 0.1)),
+                        )),
                         child: Row(children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.fromLTRB(0, 0, 23, 0),
-                            child: Icon(Icons.phone_iphone)
-                          ),
-                          Expanded(child: TextField(
-                            decoration: InputDecoration(
-                              fillColor: Colors.blue,
-                              labelText: '请输入手机号',
-                              border: InputBorder.none,///去掉下划线
-                            ),
-                            autofocus: false,
-                            controller: controller,
-                            onChanged: (text) {//内容改变的回调
-                              print('change $text');
-                            },
-                            onSubmitted: (text) {//内容提交(按回车)的回调
-                              print('submit $text');
-                            },
-                          ))
-                        ])
-                      ),
-                      Container(
+                              padding: EdgeInsets.fromLTRB(0, 0, 23, 0),
+                              child: Icon(Icons.phone_iphone)),
+                          Expanded(
+                              child: TextField(
+                                  decoration: InputDecoration(
+                                    fillColor: Colors.blue,
+                                    labelText: '请输入手机号',
+                                    border: InputBorder.none,
+                                  ),
+                                  autofocus: false,
+                                  onChanged: (text) {
+                                    _togglePhoneChange(text);
+                                  },
+                                  controller: TextEditingController.fromValue(
+                                      TextEditingValue(text: this.phone))))
+                        ])),
+                    Container(
                         margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
                         decoration: BoxDecoration(
                             border: Border(
-                              bottom: BorderSide(
+                          bottom: BorderSide(
                               style: BorderStyle.solid,
                               width: 1,
-                              color: Color.fromRGBO(0, 0, 0, 0.1)
-                            ),
-                          )
-                        ),
+                              color: Color.fromRGBO(0, 0, 0, 0.1)),
+                        )),
                         child: Row(children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.fromLTRB(0, 0, 23, 0),
-                            child: Icon(Icons.lock)
-                          ),
-                          Expanded(child: TextField(
-                            decoration: InputDecoration(
-                              fillColor: Colors.blue,
-                              labelText: '请输入密码',
-                              border: InputBorder.none,///去掉下划线
-                            ),
-                            autofocus: false,
-                            controller: controller1,
-                            onChanged: (text) {//内容改变的回调
-                              print('change $text');
-                            },
-                            onSubmitted: (text) {//内容提交(按回车)的回调
-                              print('submit $text');
-                            },
-                          ))
-                        ])
-                      ),
-                      Container(
+                              padding: EdgeInsets.fromLTRB(0, 0, 23, 0),
+                              child: Icon(Icons.lock)),
+                          Expanded(
+                              child: TextField(
+                                  decoration: InputDecoration(
+                                    fillColor: Colors.blue,
+                                    labelText: '请输入密码',
+                                    border: InputBorder.none,
+                                  ),
+                                  autofocus: false,
+                                  onChanged: (text) {
+                                    _togglePasswordChange(text);
+                                  },
+                                  controller: TextEditingController.fromValue(
+                                      TextEditingValue(text: this.pwd))))
+                        ])),
+                    Container(
                         width: 400,
                         height: 44,
                         margin: EdgeInsets.fromLTRB(0, 55, 0, 0),
                         child: RaisedButton(
-                          color:KColor.primaryColor,
-                          textColor:Colors.white,
+                          color: KColor.primaryColor,
+                          textColor: Colors.white,
                           child: Text('登录'),
-                          onPressed:()=>{
-
-                          },
-                        )
-                      ),
-                      Container(
+                          onPressed: () => {_login()},
+                        )),
+                    Container(
                         width: 400,
                         margin: EdgeInsets.fromLTRB(0, 26, 0, 0),
                         child: Row(
@@ -141,16 +164,12 @@ class _LoginPageState extends State<LoginPage>{
                               style: new TextStyle(color: KColor.primaryColor),
                             )
                           ],
-                        )
-                      )
-                  ]))
-                ),
-              ],
-            )
-          );
+                        ))
+                  ]))),
+            ],
+          ));
         },
       ),
     );
   }
-
 }

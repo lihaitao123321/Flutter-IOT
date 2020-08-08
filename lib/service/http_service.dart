@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'dart:async';
 import '../config/index.dart';
-import '../tools/index_tools.dart';
-Future request(serveName, {formData})async{
+import 'dart:convert';
+import 'dart:io';
+
+Future<Response> request(serveName, formData) async {
   try {
     Response response;
     Dio dio = Dio(BaseOptions(
@@ -16,15 +18,12 @@ Future request(serveName, {formData})async{
       responseType: ResponseType.plain,
     ));
     String url = BASE_URL + servicePath[serveName];
-    String pwd = await KRsa.encryption('11076038');
-    var postData = {
-      "telephone": "15051665680",
-      "passwd": pwd
-    };
-    response = await dio.post(url,data: postData);
-    if(response.statusCode == 200){
+    response = await dio.post(url, data: formData);
+    if (response.statusCode == HttpStatus.ok) {
+      var data = jsonDecode(response.data.toString());
+      print(data);
       return response;
-    }else{
+    } else {
       throw Exception('请求失败');
     }
   } catch (e) {

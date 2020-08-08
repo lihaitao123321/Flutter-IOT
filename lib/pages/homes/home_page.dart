@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../config/index.dart';
-import '../../service/http_service.dart';
 import 'dart:convert';
 class HomePage extends StatefulWidget{
   _HomePageState createState() => _HomePageState();
@@ -16,7 +15,6 @@ class _HomePageState extends State<HomePage>{
     return Scaffold(
       backgroundColor: KColor.backgroundColor,
       body: FutureBuilder(
-        future: request('login'),
         builder: (context, snapshot){
           if(snapshot.hasData){
               var data = json.decode(snapshot.data.toString());
