@@ -33,25 +33,27 @@ class _LoginPageState extends State<LoginPage> {
     String password = await KRsa.encryption(pwd);
     KToast toast = KToast();
     // ignore: missing_return
-    request('login', {"telephone": phone, "passwd": password}).then((res) {
-      print(res.toString());
+    request('login', {"telephone": phone, "passwd": password}).then((data) {
       loading.close();
-      // if (res.status == "1") {
-      //   toast.error("账号或密码错误");
-      //   return false;
-      // }
-      if (res.statusCode == 200) {
+      print(data['num']);
+      if (data['status'] == "1") {
+        toast.error("账号或密码错误");
+        return false;
+      }
+      if (data['num'] == "0") {
+        toast.warning("当前用户未绑定所属公司，请联系管理员!");
+        return false;
+      } else if (data['num'] == "1") {
+        setLocalStorage('userInfo', data);
         toast.success("登录成功");
         Future.delayed(Duration(milliseconds: 1000), () {
           Navigator.push(context,
               new MaterialPageRoute(builder: (context) => new IndexPage()));
         });
       } else {
-        toast.warning("当前用户未绑定所属公司，请联系管理员!");
-        return false;
+        toast.error("登录异常，请稍后再试");
       }
     });
-    
   }
 
   @override

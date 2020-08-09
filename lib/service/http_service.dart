@@ -1,14 +1,13 @@
 import 'package:dio/dio.dart';
 import 'dart:async';
 import '../config/index.dart';
-import 'dart:convert';
+import 'dart:convert' show json;
 import 'dart:io';
 
-Future<Response> request(serveName, formData) async {
+Future<Map> request(serveName, formData) async {
   try {
-    Response response;
     Dio dio = Dio(BaseOptions(
-      baseUrl: '',
+      baseUrl: BASE_URL,
       connectTimeout: 5000,
       receiveTimeout: 30000,
       headers: {
@@ -17,12 +16,11 @@ Future<Response> request(serveName, formData) async {
       contentType: Headers.jsonContentType,
       responseType: ResponseType.plain,
     ));
-    String url = BASE_URL + servicePath[serveName];
-    response = await dio.post(url, data: formData);
+    String url = SERVICE_PATH[serveName];
+    Response response = await dio.post(url, data: formData);
     if (response.statusCode == HttpStatus.ok) {
-      var data = jsonDecode(response.data.toString());
-      print(data);
-      return response;
+      Map data = json.decode(response.data.toString());
+      return data;
     } else {
       throw Exception('请求失败');
     }
