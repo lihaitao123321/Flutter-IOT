@@ -7,7 +7,6 @@ import 'cart_page.dart'; //购物车
 import 'member_page.dart'; //会员中心
 import 'package:provide/provide.dart';
 import '../provide/currnet_index_provide.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:charge/tools/tools.dart';
 
 class IndexPage extends StatelessWidget {
@@ -35,13 +34,9 @@ class IndexPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
     return Provide<CurrentIndexProvide>(
       builder: (context, child, val) {
-        getLocalStorage('userInfo').then((data) {
-          print(6666);
-          print(data);
-        });
+        getLocalStorage('userInfo').then((data) {});
         //取到当前索引值
         int currentIndex =
             Provide.value<CurrentIndexProvide>(context).currentIndex;

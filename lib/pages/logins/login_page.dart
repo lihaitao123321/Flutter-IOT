@@ -6,6 +6,7 @@ import 'package:charge/tools/tools.dart';
 import 'package:charge/components/loading.dart';
 import 'package:charge/components/toast.dart';
 import 'package:charge/pages/index_page.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
@@ -35,7 +36,6 @@ class _LoginPageState extends State<LoginPage> {
     // ignore: missing_return
     request('login', {"telephone": phone, "passwd": password}).then((data) {
       loading.close();
-      print(data['num']);
       if (data['status'] == "1") {
         toast.error("账号或密码错误");
         return false;
@@ -58,8 +58,10 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context, width: 750, height: 1334);
     return Scaffold(
       backgroundColor: KColor.backgroundColor,
+      resizeToAvoidBottomPadding: false, //输入框抵住键盘
       // appBar: new AppBar(
       //   title: Text('登录'),
       // ),
@@ -67,8 +69,7 @@ class _LoginPageState extends State<LoginPage> {
         // future: request('login'),//接口调用
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            var data = json.decode(snapshot.data.toString());
-            print(data);
+            // var data = json.decode(snapshot.data.toString());
           }
 
           return Container(
