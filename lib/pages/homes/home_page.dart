@@ -60,10 +60,16 @@ class _HomePageState extends State<HomePage> {
               child: SingleChildScrollView(
                   child: Column(children: <Widget>[
             warpBlockList(context, blockDataList),
-            Container(
-                child: barChart([36, 62, 29, 40]),
-                height: 281,
-                padding: EdgeInsets.fromLTRB(15, 0, 15, 0))
+            Padding(
+                padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                child: Container(
+                    child: barChart([36, 62, 29, 40]),
+                    height: 281,
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                    )))
           ])));
         },
       ),
