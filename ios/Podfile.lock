@@ -1,11 +1,52 @@
 PODS:
+  - AMap3DMap (7.5.0):
+    - AMapFoundation (~> 1.6.3)
+  - amap_all_fluttify (0.0.1):
+    - Flutter
+  - amap_core_fluttify (0.0.1):
+    - AMapFoundation (~> 1.6)
+    - Flutter
+    - foundation_fluttify
+  - amap_location_fluttify (0.0.1):
+    - amap_core_fluttify
+    - AMapLocation (~> 2.6.3)
+    - Flutter
+    - foundation_fluttify
+  - amap_map_fluttify (0.0.1):
+    - AMap3DMap (~> 7.5.0)
+    - amap_core_fluttify
+    - Flutter
+    - foundation_fluttify
+    - url_launcher
+  - amap_search_fluttify (0.0.1):
+    - amap_core_fluttify
+    - AMapSearch (~> 6.9.0)
+    - Flutter
+    - foundation_fluttify
+  - AMapFoundation (1.6.4)
+  - AMapLocation (2.6.5):
+    - AMapFoundation (~> 1.6.3)
+  - AMapSearch (6.9.0):
+    - AMapFoundation (~> 1.4)
+  - core_location_fluttify (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
   - fluttertoast (0.0.2):
     - Flutter
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
+  - foundation_fluttify (0.0.1):
+    - Flutter
+  - path_provider (0.0.1):
+    - Flutter
   - path_provider_linux (0.0.1):
+    - Flutter
+  - path_provider_macos (0.0.1):
+    - Flutter
+  - "permission_handler (5.0.1+1)":
+    - Flutter
+  - sensors (0.0.1):
     - Flutter
   - shared_preferences (0.0.1):
     - Flutter
@@ -30,9 +71,20 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - amap_all_fluttify (from `.symlinks/plugins/amap_all_fluttify/ios`)
+  - amap_core_fluttify (from `.symlinks/plugins/amap_core_fluttify/ios`)
+  - amap_location_fluttify (from `.symlinks/plugins/amap_location_fluttify/ios`)
+  - amap_map_fluttify (from `.symlinks/plugins/amap_map_fluttify/ios`)
+  - amap_search_fluttify (from `.symlinks/plugins/amap_search_fluttify/ios`)
+  - core_location_fluttify (from `.symlinks/plugins/core_location_fluttify/ios`)
   - Flutter (from `Flutter`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - foundation_fluttify (from `.symlinks/plugins/foundation_fluttify/ios`)
+  - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - path_provider_linux (from `.symlinks/plugins/path_provider_linux/ios`)
+  - path_provider_macos (from `.symlinks/plugins/path_provider_macos/ios`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - sensors (from `.symlinks/plugins/sensors/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - shared_preferences_linux (from `.symlinks/plugins/shared_preferences_linux/ios`)
   - shared_preferences_macos (from `.symlinks/plugins/shared_preferences_macos/ios`)
@@ -46,15 +98,41 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AMap3DMap
+    - AMapFoundation
+    - AMapLocation
+    - AMapSearch
     - FMDB
 
 EXTERNAL SOURCES:
+  amap_all_fluttify:
+    :path: ".symlinks/plugins/amap_all_fluttify/ios"
+  amap_core_fluttify:
+    :path: ".symlinks/plugins/amap_core_fluttify/ios"
+  amap_location_fluttify:
+    :path: ".symlinks/plugins/amap_location_fluttify/ios"
+  amap_map_fluttify:
+    :path: ".symlinks/plugins/amap_map_fluttify/ios"
+  amap_search_fluttify:
+    :path: ".symlinks/plugins/amap_search_fluttify/ios"
+  core_location_fluttify:
+    :path: ".symlinks/plugins/core_location_fluttify/ios"
   Flutter:
     :path: Flutter
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
+  foundation_fluttify:
+    :path: ".symlinks/plugins/foundation_fluttify/ios"
+  path_provider:
+    :path: ".symlinks/plugins/path_provider/ios"
   path_provider_linux:
     :path: ".symlinks/plugins/path_provider_linux/ios"
+  path_provider_macos:
+    :path: ".symlinks/plugins/path_provider_macos/ios"
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
+  sensors:
+    :path: ".symlinks/plugins/sensors/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
   shared_preferences_linux:
@@ -77,10 +155,25 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter/ios"
 
 SPEC CHECKSUMS:
+  AMap3DMap: fc7c911f5cf079d544ad7faec256c9554cbbb202
+  amap_all_fluttify: 40f1276b77c4f3377c216ffb6f4f556d9a195113
+  amap_core_fluttify: bc2e4245c6a6d869727ed16b009a9fa3dbefcf4a
+  amap_location_fluttify: 2c842141f7890c620a95696fe902ad2a4a6aeaf5
+  amap_map_fluttify: 176c1c6f07f59564a0e7da0e30dada7da56b99aa
+  amap_search_fluttify: ed2c9edb9deb9561a39fda6ddb29017e77f0f8e3
+  AMapFoundation: 3638198dfa40be54648570c3520edefad288286b
+  AMapLocation: c566d448285cd502c1e313063d9e2460bd4d7100
+  AMapSearch: af02822537e55b85a4752e9df5c19e4b9da82031
+  core_location_fluttify: 24cc9dcd986ac7059916632d2cb3babb1568ff61
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   fluttertoast: b644586ef3b16f67fae9a1f8754cef6b2d6b634b
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  foundation_fluttify: 0c45145e3fad1fb99188e4979daed5b24cd9b278
+  path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   path_provider_linux: 4d630dc393e1f20364f3e3b4a2ff41d9674a84e4
+  path_provider_macos: f760a3c5b04357c380e2fddb6f9db6f3015897e0
+  permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
+  sensors: 84eb7a30e47a649e4172b71d6e81be614c280336
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   shared_preferences_linux: afefbfe8d921e207f01ede8b60373d9e3b566b78
   shared_preferences_macos: f3f29b71ccbb56bf40c9dd6396c9acf15e214087

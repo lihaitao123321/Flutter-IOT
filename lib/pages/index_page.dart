@@ -1,8 +1,7 @@
 import 'package:charge/config/index.dart';
-import 'package:charge/pages/category_page.dart';
 import 'package:flutter/material.dart';
 import './homes/home_page.dart'; //首页
-import 'category_page.dart'; //分类
+import './maps/map.dart'; //地图
 import 'cart_page.dart'; //购物车
 import 'member_page.dart'; //会员中心
 import 'package:provide/provide.dart';
@@ -16,8 +15,8 @@ class IndexPage extends StatelessWidget {
         title: Text(KString.homeTitle), //首页
         icon: Icon(Icons.home)),
     BottomNavigationBarItem(
-        title: Text(KString.categoryTitle), //分类
-        icon: Icon(Icons.category)),
+        title: Text(KString.mapTitle), //地图
+        icon: Icon(Icons.location_on)),
     BottomNavigationBarItem(
         title: Text(KString.shoppingCartTitle), //购物车
         icon: Icon(Icons.shopping_cart)),
@@ -27,7 +26,7 @@ class IndexPage extends StatelessWidget {
   ];
   final List<Widget> tabBodies = [
     HomePage(),
-    CategoryPage(),
+    MapPage(),
     CartPage(),
     MemberPage()
   ];
