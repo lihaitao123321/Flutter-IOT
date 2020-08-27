@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert' show json;
 
+/// 设置本地储存
 setLocalStorage(String key, dynamic value) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   if (value is String) {
@@ -10,7 +11,8 @@ setLocalStorage(String key, dynamic value) async {
   }
 }
 
- Future getLocalStorage(String key, [String type = '']) async {
+/// 获取本地储存
+Future getLocalStorage(String key, [String type = '']) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String res = prefs.getString(key);
   if (type == 'object') {

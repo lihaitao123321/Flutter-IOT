@@ -6,7 +6,6 @@ import 'cart_page.dart'; //购物车
 import 'member_page.dart'; //会员中心
 import 'package:provide/provide.dart';
 import '../provide/currnet_index_provide.dart';
-import 'package:charge/tools/tools.dart';
 
 class IndexPage extends StatelessWidget {
   final List<BottomNavigationBarItem> bottomTabs = [
@@ -36,7 +35,12 @@ class IndexPage extends StatelessWidget {
     return ProvideMulti(
       requestedValues: [CurrentIndexProvide],
       builder: (context, child, model) {
-        getLocalStorage('userInfo').then((data) {});
+        // getLocalStorage('userInfo').then((data) {
+        //   print('userInfo' + data.toString());
+        // });
+        // getLocalStorage('lastThemeIndex').then((data) {
+        //   print('lastThemeIndex' + data.toString());
+        // });
         //取到当前索引值
         int currentIndex = model.get<CurrentIndexProvide>().currentIndex;
         return Scaffold(

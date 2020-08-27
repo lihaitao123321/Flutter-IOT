@@ -1,20 +1,29 @@
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:charge/config/amap.dart';
+import 'package:charge/tools/spUtil.dart';
 import 'package:flutter/material.dart';
-import './config/index.dart';
 import 'package:provide/provide.dart';
+import './config/index.dart';
 import './provide/theme_provide.dart';
 import './provide/currnet_index_provide.dart';
 import './pages/logins/login_page.dart';
 
-Future<void> main() async {
-  //shouye
+// ignore: missing_return
+Future<void> main() {
+  realRunApp();
+}
+
+void realRunApp() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  //初始化本地储存同步方法
+  await SpUtil.getInstance();
   var currentIndexProvide = CurrentIndexProvide();
   var themeProvide = ThemeProvide();
   var providers = Providers();
   providers
     ..provide(Provider<CurrentIndexProvide>.value(currentIndexProvide))
     ..provide(Provider<ThemeProvide>.value(themeProvide));
+
   runApp(ProviderNode(child: MyApp(), providers: providers));
   //高德地图初始化-ios
   await enableFluttifyLog(false);
@@ -28,10 +37,25 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // String lastThemeIndex = SpUtil.getString("lastThemeIndex", defValue: '666');
+    // LogUtil.e("userName: " + lastThemeIndex);
     return ProvideMulti(
       requestedValues: [ThemeProvide],
       builder: (context, child, model) {
-        Map currentTheme = Provide.value<ThemeProvide>(context).currentTheme;
+        int lastIndex = -1;
+        String lastThemeIndex = SpUtil.preferences.getString("lastThemeIndex");
+        if (lastThemeIndex.isNotEmpty) {
+          lastIndex = int.parse(lastThemeIndex);
+        }
+        int currentIndex = model.get<ThemeProvide>().currentIndex;
+        print("lastIndex=>" +
+            lastIndex.toString() +
+            ':' +
+            currentIndex.toString());
+        if (currentIndex != lastIndex) {
+          model.get<ThemeProvide>().changeTheme(lastIndex);
+        }
+        Map currentTheme = model.get<ThemeProvide>().currentTheme;
         return Container(
             child: MaterialApp(
                 title: KString.mainTitle, //通用主标题

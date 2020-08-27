@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:charge/config/color.dart';
+
 class KToast {
   KToast();
+
   ///打开loading
   void success(text) {
     Fluttertoast.showToast(
@@ -10,11 +12,11 @@ class KToast {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
-        backgroundColor: KColor.primaryColor,
+        backgroundColor: KColor.loadingColor,
         textColor: Colors.white,
-        fontSize: 16.0
-    );
+        fontSize: 16.0);
   }
+
   void error(text) {
     Fluttertoast.showToast(
         msg: text,
@@ -23,9 +25,9 @@ class KToast {
         timeInSecForIosWeb: 1,
         backgroundColor: KColor.errorColor,
         textColor: Colors.white,
-        fontSize: 16.0
-    );
+        fontSize: 16.0);
   }
+
   void warning(text) {
     Fluttertoast.showToast(
         msg: text,
@@ -34,7 +36,6 @@ class KToast {
         timeInSecForIosWeb: 1,
         backgroundColor: KColor.warningColor,
         textColor: Colors.white,
-        fontSize: 16.0
-    );
+        fontSize: 16.0);
   }
 }

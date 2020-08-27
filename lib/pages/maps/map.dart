@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 import '../../config/index.dart';
@@ -146,7 +144,7 @@ class _MapPageState extends State<MapPage> {
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
+                                  BorderRadius.all(Radius.circular(10)),
                               border: Border(
                                   bottom: BorderSide(
                                       color: Color.fromRGBO(0, 0, 0, 0.1)))),

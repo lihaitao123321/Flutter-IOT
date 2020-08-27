@@ -33,7 +33,12 @@ dependencies:
   flutter_html: ^0.9.6
   sqflite: ^1.1.0
   shared_preferences: ^0.5.8
+  package_info: ^0.4.3
   encrypt: ^4.0.2
+  flustars: ^0.3.3
+  # https://github.com/Sky24n/sp_util
+  # sp_util分拆成单独的库，可以直接引用
+  sp_util: ^1.0.1
   pointycastle: ^1.0.2
   flutter_spinkit: "^4.1.2"
   json_annotation: ^3.0.0

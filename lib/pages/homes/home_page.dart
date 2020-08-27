@@ -43,10 +43,21 @@ class _HomePageState extends State<HomePage> {
     return ProvideMulti(
         requestedValues: [ThemeProvide],
         builder: (context, child, model) {
+          int currentIndex = model.get<ThemeProvide>().currentIndex;
           return Scaffold(
             // appBar: serachBar(context),
             appBar: AppBar(
-              leading: Icon(Icons.apps),
+              leading: IconButton(
+                  icon: Icon(Icons.color_lens),
+                  onPressed: () {
+                    if (currentIndex == 3) {
+                      currentIndex = 1;
+                    } else {
+                      currentIndex++;
+                    }
+                    print('setIndex=>' + currentIndex.toString());
+                    model.get<ThemeProvide>().changeTheme(currentIndex);
+                  }),
               title: serachBar(context, '某某智能运维云服务系统', () {
                 Navigator.push(
                     context,
@@ -54,11 +65,7 @@ class _HomePageState extends State<HomePage> {
                         builder: (context) => HomeSearchPage()));
               }),
               actions: <Widget>[
-                IconButton(
-                    icon: Icon(Icons.camera),
-                    onPressed: () {
-                      model.get<ThemeProvide>().changeTheme(2);
-                    })
+                IconButton(icon: Icon(Icons.camera), onPressed: () {})
               ],
             ),
             backgroundColor: KColor.backgroundColor,
