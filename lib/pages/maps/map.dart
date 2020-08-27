@@ -18,6 +18,7 @@ class _MapPageState extends State<MapPage> {
     final double topPadding = MediaQuery.of(context).padding.top;
     final double bottomPadding = MediaQuery.of(context).padding.bottom;
     AmapController _controller;
+    Object markInfo;
     return Scaffold(
       backgroundColor: KColor.backgroundColor,
       // floatingActionButton: FloatingActionButton(
@@ -40,35 +41,30 @@ class _MapPageState extends State<MapPage> {
                     // 地图View创建完成回调
                     onMapCreated: (controller) async {
                       _controller = controller;
-                      print('地图创建完成');
+                      //地图按中心点缩放
+                      _controller?.setZoomByCenter(true);
+                      //开始定位
                       await _controller?.showMyLocation(MyLocationOption(
                           show: true, myLocationType: MyLocationType.Locate));
-                      print('地图显示当前位置');
-                      _controller?.setZoomByCenter(true);
-                      print('地图设置中心点');
+                      //获取定位位置
                       final latLng = await _controller?.getLocation();
-                      print('当前经纬度: ${latLng.latitude}, ${latLng.longitude}');
+                      //设置中心点为当前定位位置
                       _controller?.setCenterCoordinate(
                           LatLng(latLng.latitude, latLng.longitude));
+                      //添加点标记
                       final marker = await _controller?.addMarker(MarkerOption(
-                        latLng: LatLng(latLng.latitude, latLng.longitude),
-                        iconProvider: AssetImage('asset/images/mark_red.png'),
-                        // widget: Image(
-                        //     width: 10,
-                        //     height: 10,
-                        //     fit: BoxFit.cover,
-                        //     image: AssetImage('asset/images/girl.jpeg')),
-                        title: '北京',
-                        snippet: '中国的首都北京，欢迎来到北京',
-                      ));
+                          latLng: LatLng(latLng.latitude, latLng.longitude),
+                          iconProvider: AssetImage('asset/images/mark_red.png'),
+                          title: '北京',
+                          // snippet: '中国的首都北京，欢迎来到北京',
+                          object: '{a:666,b:777}'));
+                      //给点标记增加点击事件监听
+                      await _controller
+                          ?.setMarkerClickedListener((marker) async {
+                        markInfo = marker.object;
+                      });
+                      //把点标记存储起来
                       _markers.add(marker);
-                      // _controller?.requireAlwaysAuth();
-
-                      // _controller?
-                      //     .getLocation(
-                      //         interval: Duration(seconds: 1),
-                      //         timeout: Duration(seconds: 10))
-                      //     .then((value) => print(value));
                     },
                     //地图类型
                     mapType: MapType.Standard,
@@ -140,6 +136,34 @@ class _MapPageState extends State<MapPage> {
                                   },
                                 ))
                           ])),
+                  Positioned(
+                      right: 0,
+                      left: 0,
+                      bottom: 0,
+                      height: 200,
+                      child: Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                              border: Border(
+                                  bottom: BorderSide(
+                                      color: Color.fromRGBO(0, 0, 0, 0.1)))),
+                          child: Padding(
+                              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: <Widget>[
+                                    InkWell(
+                                      child: Icon(Icons.close),
+                                      onTap: () {
+                                        _controller?.zoomOut();
+                                      },
+                                    )
+                                  ]))))
                 ],
               ));
         },
@@ -147,3 +171,12 @@ class _MapPageState extends State<MapPage> {
     );
   }
 }
+
+Widget buildMarkInfoWidget() {
+  var content;
+
+  return content;
+}
+
+/// 获取mark展示层widget
+getMarkInfoWidget() {}

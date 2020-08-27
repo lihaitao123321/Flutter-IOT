@@ -33,12 +33,12 @@ class IndexPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provide<CurrentIndexProvide>(
-      builder: (context, child, val) {
+    return ProvideMulti(
+      requestedValues: [CurrentIndexProvide],
+      builder: (context, child, model) {
         getLocalStorage('userInfo').then((data) {});
         //取到当前索引值
-        int currentIndex =
-            Provide.value<CurrentIndexProvide>(context).currentIndex;
+        int currentIndex = model.get<CurrentIndexProvide>().currentIndex;
         return Scaffold(
           backgroundColor: Color.fromRGBO(244, 245, 245, 1.0),
           bottomNavigationBar: BottomNavigationBar(
@@ -46,7 +46,7 @@ class IndexPage extends StatelessWidget {
             currentIndex: currentIndex,
             items: bottomTabs,
             onTap: (index) {
-              Provide.value<CurrentIndexProvide>(context).changeIndex(index);
+              model.get<CurrentIndexProvide>().changeIndex(index);
             },
           ),
           body: IndexedStack(
