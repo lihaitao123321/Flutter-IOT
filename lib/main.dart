@@ -14,6 +14,7 @@ Future<void> main() {
 }
 
 void realRunApp() async {
+  await enableFluttifyLog(false);
   WidgetsFlutterBinding.ensureInitialized();
   //初始化本地储存同步方法
   await SpUtil.getInstance();
@@ -23,14 +24,9 @@ void realRunApp() async {
   providers
     ..provide(Provider<CurrentIndexProvide>.value(currentIndexProvide))
     ..provide(Provider<ThemeProvide>.value(themeProvide));
-
   runApp(ProviderNode(child: MyApp(), providers: providers));
   //高德地图初始化-ios
-  await enableFluttifyLog(false);
-  await AmapService.init(
-      iosKey: KMap.iosKey,
-      androidKey: KMap.androidKey,
-      webApiKey: KMap.webApiKey);
+  await AmapService.init(iosKey: KMap.iosKey, androidKey: KMap.androidKey);
 }
 
 ///Users/lihaitao
