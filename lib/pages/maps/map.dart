@@ -1,10 +1,13 @@
-import 'package:charge/provide/theme_provide.dart';
+import 'dart:convert';
+
+import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provide/provide.dart';
+
+import 'package:charge/provide/theme_provide.dart';
+
 import '../../config/index.dart';
-import 'dart:convert';
-import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 
 class MapPage extends StatefulWidget {
   _MapPageState createState() => _MapPageState();
@@ -19,6 +22,7 @@ class _MapPageState extends State<MapPage> {
     final double bottomPadding = MediaQuery.of(context).padding.bottom;
     AmapController _controller;
     Object markInfo;
+    bool showMarker;
     return ProvideMulti(
         requestedValues: [ThemeProvide],
         builder: (context, child, model) {
@@ -108,6 +112,7 @@ class _MapPageState extends State<MapPage> {
                           // this.onMapMoveEnd,
                           maskDelay: Duration(milliseconds: 500),
                         ),
+                        // 地图工具条
                         Positioned(
                             right: 5,
                             bottom: 30,
@@ -144,50 +149,11 @@ class _MapPageState extends State<MapPage> {
                                         },
                                       ))
                                 ])),
-                        Positioned(
-                            right: 0,
-                            left: 0,
-                            bottom: 0,
-                            height: 200,
-                            child: Container(
-                                height: 200,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10))),
-                                child: Column(children: <Widget>[
-                                  Container(
-                                      width: 375,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                          border: Border(
-                                              bottom: BorderSide(
-                                                  color: Color.fromRGBO(
-                                                      0, 0, 0, 0.1)))),
-                                      child: Padding(
-                                          padding:
-                                              EdgeInsets.fromLTRB(15, 5, 15, 5),
-                                          child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              // crossAxisAlignment:
-                                              // CrossAxisAlignment.stretch,
-                                              children: <Widget>[
-                                                Container(
-                                                    child: InkWell(
-                                                        child:
-                                                            Icon(Icons.close),
-                                                        onTap: () {})),
-                                                Container(
-                                                    height: 30,
-                                                    child: RaisedButton(
-                                                        color: currentTheme[
-                                                            'primaryColor'],
-                                                        onPressed: () {},
-                                                        child: Text('导航'))),
-                                              ]))),
-                                ])))
+                        // 底部站点弹框
+                        BuildMarkInfoWidget(
+                            show: showMarker,
+                            marker: markInfo,
+                            currentTheme: currentTheme),
                       ],
                     ));
               },
@@ -197,11 +163,58 @@ class _MapPageState extends State<MapPage> {
   }
 }
 
-Widget buildMarkInfoWidget() {
-  var content;
+/// 站点信息面板展示
+// ignore: must_be_immutable
+class BuildMarkInfoWidget extends StatelessWidget {
+  // 接收父级参数定义
+  bool show;
+  Map marker;
+  Map currentTheme;
+  // 构造函数
+  BuildMarkInfoWidget({
+    Key key,
+    this.show,
+    this.marker,
+    this.currentTheme,
+  }) : super(key: key);
 
-  return content;
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+        right: 0,
+        left: 0,
+        bottom: 0,
+        height: 200,
+        child: Container(
+            height: 200,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            child: Column(children: <Widget>[
+              Container(
+                  width: 375,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom:
+                              BorderSide(color: Color.fromRGBO(0, 0, 0, 0.1)))),
+                  child: Padding(
+                      padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                      child:
+                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              // crossAxisAlignment:
+                              // CrossAxisAlignment.stretch,
+                              children: <Widget>[
+                            Container(
+                                child: InkWell(
+                                    child: Icon(Icons.close), onTap: () {})),
+                            Container(
+                                height: 30,
+                                child: RaisedButton(
+                                    color: currentTheme['primaryColor'],
+                                    onPressed: () {},
+                                    child: Text('导航'))),
+                          ]))),
+            ])));
+  }
 }
-
-/// 获取mark展示层widget
-getMarkInfoWidget() {}

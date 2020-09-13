@@ -14,8 +14,9 @@ Future<void> main() {
 }
 
 void realRunApp() async {
-  await enableFluttifyLog(false);
   WidgetsFlutterBinding.ensureInitialized();
+  await enableFluttifyLog(false);
+
   //初始化本地储存同步方法
   await SpUtil.getInstance();
   var currentIndexProvide = CurrentIndexProvide();
@@ -40,7 +41,9 @@ class MyApp extends StatelessWidget {
       builder: (context, child, model) {
         int lastIndex = -1;
         String lastThemeIndex = SpUtil.preferences.getString("lastThemeIndex");
-        if (lastThemeIndex.isNotEmpty) {
+        print('666:');
+        print(lastThemeIndex);
+        if (lastThemeIndex != null && lastThemeIndex.isNotEmpty) {
           lastIndex = int.parse(lastThemeIndex);
         }
         int currentIndex = model.get<ThemeProvide>().currentIndex;

@@ -41,17 +41,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	
-	<key>io.flutter.embedded_views_preview</key>
-	<string>YES</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>需要定位权限</string>
-	<!-- <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>需要定位权限</string> -->
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>iosamap</string>
-		<string>amapuri</string>
-	</array>
 </dict>
 </plist>
