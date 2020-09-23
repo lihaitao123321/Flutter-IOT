@@ -1,4 +1,4 @@
-package com.mitsubishi.charge
+package com.devo.iot
 
 import io.flutter.embedding.android.FlutterActivity
 

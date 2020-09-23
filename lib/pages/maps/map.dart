@@ -15,14 +15,21 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   get children => null;
+  bool showMarker = false;
   List<Marker> _markers = [];
+  void _toggleMarkerChange(boo) {
+    setState(() {
+      showMarker = boo;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final double topPadding = MediaQuery.of(context).padding.top;
     final double bottomPadding = MediaQuery.of(context).padding.bottom;
     AmapController _controller;
     Object markInfo;
-    bool showMarker;
+
     return ProvideMulti(
         requestedValues: [ThemeProvide],
         builder: (context, child, model) {
@@ -74,6 +81,7 @@ class _MapPageState extends State<MapPage> {
                             await _controller
                                 ?.setMarkerClickedListener((marker) async {
                               markInfo = marker.object;
+                              _toggleMarkerChange(true);
                             });
                             //把点标记存储起来
                             _markers.add(marker);
@@ -153,7 +161,10 @@ class _MapPageState extends State<MapPage> {
                         BuildMarkInfoWidget(
                             show: showMarker,
                             marker: markInfo,
-                            currentTheme: currentTheme),
+                            currentTheme: currentTheme,
+                            onHideMartInfo: () {
+                              _toggleMarkerChange(false);
+                            }),
                       ],
                     ));
               },
@@ -170,51 +181,56 @@ class BuildMarkInfoWidget extends StatelessWidget {
   bool show;
   Map marker;
   Map currentTheme;
+  final onHideMartInfo;
   // 构造函数
-  BuildMarkInfoWidget({
-    Key key,
-    this.show,
-    this.marker,
-    this.currentTheme,
-  }) : super(key: key);
+  BuildMarkInfoWidget(
+      {Key key, this.show, this.marker, this.currentTheme, this.onHideMartInfo})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-        right: 0,
-        left: 0,
-        bottom: 0,
-        height: 200,
-        child: Container(
-            height: 200,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            child: Column(children: <Widget>[
-              Container(
-                  width: 375,
-                  height: 50,
-                  decoration: BoxDecoration(
-                      border: Border(
-                          bottom:
-                              BorderSide(color: Color.fromRGBO(0, 0, 0, 0.1)))),
-                  child: Padding(
-                      padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
-                      child:
-                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              // crossAxisAlignment:
-                              // CrossAxisAlignment.stretch,
-                              children: <Widget>[
-                            Container(
-                                child: InkWell(
-                                    child: Icon(Icons.close), onTap: () {})),
-                            Container(
-                                height: 30,
-                                child: RaisedButton(
-                                    color: currentTheme['primaryColor'],
-                                    onPressed: () {},
-                                    child: Text('导航'))),
-                          ]))),
-            ])));
+    if (show == true) {
+      return Positioned(
+          right: 0,
+          left: 0,
+          bottom: 0,
+          height: 200,
+          child: Container(
+              height: 200,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+              child: Column(children: <Widget>[
+                Container(
+                    width: 375,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(
+                                color: Color.fromRGBO(0, 0, 0, 0.1)))),
+                    child: Padding(
+                        padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // crossAxisAlignment:
+                            // CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              Container(
+                                  child: InkWell(
+                                      child: Icon(Icons.close),
+                                      onTap: () {
+                                        onHideMartInfo();
+                                      })),
+                              Container(
+                                  height: 30,
+                                  child: RaisedButton(
+                                      color: currentTheme['primaryColor'],
+                                      onPressed: () {},
+                                      child: Text('导航'))),
+                            ]))),
+              ])));
+    } else {
+      return Container();
+    }
   }
 }

@@ -398,7 +398,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mitsubishi.charge;
+				PRODUCT_BUNDLE_IDENTIFIER = com.devo.iot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -530,7 +530,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mitsubishi.charge;
+				PRODUCT_BUNDLE_IDENTIFIER = com.devo.iot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -557,7 +557,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mitsubishi.charge;
+				PRODUCT_BUNDLE_IDENTIFIER = com.devo.iot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
