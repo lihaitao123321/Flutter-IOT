@@ -1,3 +1,4 @@
+import 'package:charge/tools/spUtil.dart';
 import 'package:dio/dio.dart';
 import 'dart:async';
 import '../config/index.dart';
@@ -6,13 +7,16 @@ import 'dart:io';
 
 Future<Map> request(serveName, formData) async {
   try {
+    String token = SpUtil.preferences.getString("token");
+    print(token);
+    if (token == null) {
+      token = "";
+    }
     Dio dio = Dio(BaseOptions(
       baseUrl: BASE_URL,
       connectTimeout: 5000,
       receiveTimeout: 30000,
-      headers: {
-        "Authorization": '',
-      },
+      headers: {"Authorization": token},
       contentType: Headers.jsonContentType,
       responseType: ResponseType.plain,
     ));

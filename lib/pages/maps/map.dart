@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
+import 'package:charge/components/loading.dart';
+import 'package:charge/components/toast.dart';
+import 'package:charge/service/http_service.dart';
 import 'package:charge/tools/amapUtil.dart';
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
@@ -15,27 +18,46 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
+  LatLng _latLng;
   AmapController _controller;
   bool showMarker;
   Map markInfo;
   List<Marker> _markers = [];
+
+  /// marker的展示或隐藏
   void _setShowMarker(bool boo) {
     setState(() {
       showMarker = boo;
     });
   }
 
+  /// 设置弹出层的展示信息
   void _setMarkInfo(Map info) {
     setState(() {
       markInfo = info;
     });
   }
 
+  /// 初始化页面数据
+  void _initData() {
+    // KToast toast = KToast();
+    // ignore: missing_return
+    request('getMapPointList', {
+      "longitude": _latLng.longitude,
+      "latitude": _latLng.latitude,
+      "radius": 9999999999
+    }).then((data) {
+      //这是地图左侧和站点marker列表的内容,目前不能切换站点，还没有数据
+      print(data);
+    });
+  }
+
+  void setLeftInfo() {}
+
   @override
   Widget build(BuildContext context) {
     // final double topPadding = MediaQuery.of(context).padding.top;
     // final double bottomPadding = MediaQuery.of(context).padding.bottom;
-
     return ProvideMulti(
         requestedValues: [ThemeProvide],
         builder: (context, child, model) {
@@ -49,9 +71,6 @@ class _MapPageState extends State<MapPage> {
             // ),
             body: FutureBuilder(
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  var data = json.decode(snapshot.data.toString());
-                }
                 return ConstrainedBox(
                     constraints: BoxConstraints.expand(),
                     child: Stack(
@@ -69,6 +88,8 @@ class _MapPageState extends State<MapPage> {
                                 myLocationType: MyLocationType.Locate));
                             //获取定位位置
                             final latLng = await _controller?.getLocation();
+                            _latLng = latLng;
+                            _initData();
                             //设置中心点为当前定位位置
                             await _controller?.setCenterCoordinate(
                                 LatLng(latLng.latitude, latLng.longitude));

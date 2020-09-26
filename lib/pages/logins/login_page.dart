@@ -46,6 +46,7 @@ class _LoginPageState extends State<LoginPage> {
         return false;
       } else if (data['num'] == "1") {
         setLocalStorage('userInfo', data);
+        setLocalStorage('token', data["token"]);
         setLocalStorage('lastThemeIndex', 1.toString());
         toast.success("登录成功");
         Future.delayed(Duration(milliseconds: 1000), () {
