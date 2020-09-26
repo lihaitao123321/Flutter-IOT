@@ -12,6 +12,6 @@ class KColor {
   static const Color warningColor = Colors.orange;
   //危险红色
   static const Color errorColor = Colors.red;
-  //危险红色
+  //加载中颜色
   static const Color loadingColor = Colors.grey;
 }

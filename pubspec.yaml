@@ -71,8 +71,10 @@ flutter:
     - asset/images/girl.jpeg
     - asset/images/mark.png
     - asset/images/mark_red.png
+    - asset/images/navigation.png
     - keys/publicKey.pem
     - keys/privateKey.pem
+    - keys/androidTest.keystore
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

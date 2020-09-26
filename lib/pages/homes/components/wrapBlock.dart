@@ -13,7 +13,7 @@ Widget warpBlockList(context, List<Map> dataList) {
 
 Widget warpBlockItem(context, Map item, [Function onTap]) {
   return Container(
-      width: 165,
+      width: 157,
       padding: EdgeInsets.fromLTRB(18, 10, 18, 10),
       decoration: BoxDecoration(
         color: Color.fromRGBO(255, 255, 255, 1),

@@ -55,7 +55,6 @@ class _HomePageState extends State<HomePage> {
                     } else {
                       currentIndex++;
                     }
-                    print('setIndex=>' + currentIndex.toString());
                     model.get<ThemeProvide>().changeTheme(currentIndex);
                   }),
               title: serachBar(context, '某某智能运维云服务系统', () {

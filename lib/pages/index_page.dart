@@ -9,18 +9,17 @@ import '../provide/currnet_index_provide.dart';
 
 class IndexPage extends StatelessWidget {
   final List<BottomNavigationBarItem> bottomTabs = [
-    //首页
     BottomNavigationBarItem(
-        title: Text(KString.homeTitle), //首页
+        label: KString.homeTitle, //首页
         icon: Icon(Icons.home)),
     BottomNavigationBarItem(
-        title: Text(KString.mapTitle), //地图
+        label: KString.mapTitle, //地图
         icon: Icon(Icons.location_on)),
     BottomNavigationBarItem(
-        title: Text(KString.shoppingCartTitle), //购物车
+        label: KString.shoppingCartTitle, //购物车
         icon: Icon(Icons.shopping_cart)),
     BottomNavigationBarItem(
-        title: Text(KString.memberTitle), //会员中心
+        label: KString.memberTitle, //会员中心
         icon: Icon(Icons.person)),
   ];
   final List<Widget> tabBodies = [
@@ -35,12 +34,6 @@ class IndexPage extends StatelessWidget {
     return ProvideMulti(
       requestedValues: [CurrentIndexProvide],
       builder: (context, child, model) {
-        // getLocalStorage('userInfo').then((data) {
-        //   print('userInfo' + data.toString());
-        // });
-        // getLocalStorage('lastThemeIndex').then((data) {
-        //   print('lastThemeIndex' + data.toString());
-        // });
         //取到当前索引值
         int currentIndex = model.get<CurrentIndexProvide>().currentIndex;
         return Scaffold(

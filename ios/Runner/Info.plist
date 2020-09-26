@@ -51,6 +51,8 @@
 	<array>
 		<string>iosamap</string>
 		<string>amapuri</string>
+		<string>qqmap</string>
+		<string>baidumap</string>
 	</array>
 </dict>
 </plist>

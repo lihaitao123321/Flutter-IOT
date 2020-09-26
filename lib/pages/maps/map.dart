@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
+import 'package:charge/tools/amapUtil.dart';
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provide/provide.dart';
@@ -14,21 +15,26 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-  get children => null;
-  bool showMarker = false;
+  AmapController _controller;
+  bool showMarker;
+  Map markInfo;
   List<Marker> _markers = [];
-  void _toggleMarkerChange(boo) {
+  void _setShowMarker(bool boo) {
     setState(() {
       showMarker = boo;
     });
   }
 
+  void _setMarkInfo(Map info) {
+    setState(() {
+      markInfo = info;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final double topPadding = MediaQuery.of(context).padding.top;
-    final double bottomPadding = MediaQuery.of(context).padding.bottom;
-    AmapController _controller;
-    Object markInfo;
+    // final double topPadding = MediaQuery.of(context).padding.top;
+    // final double bottomPadding = MediaQuery.of(context).padding.bottom;
 
     return ProvideMulti(
         requestedValues: [ThemeProvide],
@@ -45,7 +51,6 @@ class _MapPageState extends State<MapPage> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   var data = json.decode(snapshot.data.toString());
-                  print(data);
                 }
                 return ConstrainedBox(
                     constraints: BoxConstraints.expand(),
@@ -57,7 +62,7 @@ class _MapPageState extends State<MapPage> {
                           onMapCreated: (controller) async {
                             _controller = controller;
                             //地图按中心点缩放
-                            _controller?.setZoomByCenter(true);
+                            await _controller?.setZoomByCenter(true);
                             //开始定位
                             await _controller?.showMyLocation(MyLocationOption(
                                 show: true,
@@ -65,10 +70,10 @@ class _MapPageState extends State<MapPage> {
                             //获取定位位置
                             final latLng = await _controller?.getLocation();
                             //设置中心点为当前定位位置
-                            _controller?.setCenterCoordinate(
+                            await _controller?.setCenterCoordinate(
                                 LatLng(latLng.latitude, latLng.longitude));
-                            //添加点标记
-                            final marker = await _controller?.addMarker(
+                            //添加marker点
+                            final marker = await _controller.addMarker(
                                 MarkerOption(
                                     latLng: LatLng(
                                         latLng.latitude, latLng.longitude),
@@ -76,12 +81,17 @@ class _MapPageState extends State<MapPage> {
                                         AssetImage('asset/images/mark_red.png'),
                                     title: '北京',
                                     // snippet: '中国的首都北京，欢迎来到北京',
-                                    object: '{a:666,b:777}'));
+                                    object: json.encode({
+                                      "latitude": latLng.latitude - 0.5,
+                                      "longitude": latLng.longitude - 0.5
+                                    })));
                             //给点标记增加点击事件监听
                             await _controller
                                 ?.setMarkerClickedListener((marker) async {
-                              markInfo = marker.object;
-                              _toggleMarkerChange(true);
+                              marker.object.then((value) {
+                                _setMarkInfo(json.decode(value));
+                                _setShowMarker(true);
+                              });
                             });
                             //把点标记存储起来
                             _markers.add(marker);
@@ -160,10 +170,10 @@ class _MapPageState extends State<MapPage> {
                         // 底部站点弹框
                         BuildMarkInfoWidget(
                             show: showMarker,
-                            marker: markInfo,
+                            markInfo: markInfo,
                             currentTheme: currentTheme,
                             onHideMartInfo: () {
-                              _toggleMarkerChange(false);
+                              _setShowMarker(false);
                             }),
                       ],
                     ));
@@ -179,12 +189,16 @@ class _MapPageState extends State<MapPage> {
 class BuildMarkInfoWidget extends StatelessWidget {
   // 接收父级参数定义
   bool show;
-  Map marker;
+  Map markInfo;
   Map currentTheme;
   final onHideMartInfo;
   // 构造函数
   BuildMarkInfoWidget(
-      {Key key, this.show, this.marker, this.currentTheme, this.onHideMartInfo})
+      {Key key,
+      this.show,
+      this.markInfo,
+      this.currentTheme,
+      this.onHideMartInfo})
       : super(key: key);
 
   @override
@@ -212,21 +226,48 @@ class BuildMarkInfoWidget extends StatelessWidget {
                         padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            // crossAxisAlignment:
-                            // CrossAxisAlignment.stretch,
                             children: <Widget>[
                               Container(
                                   child: InkWell(
-                                      child: Icon(Icons.close),
+                                      child:
+                                          Icon(Icons.close, color: Colors.grey),
                                       onTap: () {
                                         onHideMartInfo();
                                       })),
                               Container(
-                                  height: 30,
-                                  child: RaisedButton(
+                                  width: 70,
+                                  height: 28,
+                                  decoration: BoxDecoration(
                                       color: currentTheme['primaryColor'],
-                                      onPressed: () {},
-                                      child: Text('导航'))),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(14))),
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image(
+                                            width: 15,
+                                            height: 15,
+                                            fit: BoxFit.cover,
+                                            image: AssetImage(
+                                                'asset/images/navigation.png')),
+                                        Container(
+                                            margin:
+                                                EdgeInsets.fromLTRB(3, 0, 0, 0),
+                                            child: InkWell(
+                                              child: Text('导航',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              onTap: () {
+                                                MapUtil.gotoAMap(
+                                                    markInfo["longitude"],
+                                                    markInfo["latitude"]);
+                                              },
+                                            ))
+                                      ])),
                             ]))),
               ])));
     } else {

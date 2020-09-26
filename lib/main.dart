@@ -1,5 +1,6 @@
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:charge/config/amap.dart';
+import 'package:charge/tools/permission.dart';
 import 'package:charge/tools/spUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:provide/provide.dart';
@@ -29,7 +30,11 @@ void realRunApp() async {
     ..provide(Provider<ThemeProvide>.value(themeProvide));
   runApp(ProviderNode(child: MyApp(), providers: providers));
   //高德地图初始化-ios
-  await AmapService.init(iosKey: KMap.iosKey, androidKey: KMap.androidKey);
+  await AmapService.init(
+      iosKey: KMap.iosKey,
+      androidKey: KMap.androidKey,
+      webApiKey: KMap.webApiKey);
+  KPermission.check();
 }
 
 ///Users/lihaitao
