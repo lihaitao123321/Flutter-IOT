@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import './homes/home_page.dart'; //首页
 import './maps/map.dart'; //地图
 import 'cart_page.dart'; //购物车
-import 'member_page.dart'; //会员中心
+import 'member_center/member_page.dart'; //会员中心
 import 'package:provide/provide.dart';
 import '../provide/currnet_index_provide.dart';
 

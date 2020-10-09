@@ -1,15 +1,15 @@
 import 'dart:convert';
 
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
-import 'package:charge/components/loading.dart';
-import 'package:charge/components/toast.dart';
-import 'package:charge/service/http_service.dart';
-import 'package:charge/tools/amapUtil.dart';
 import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provide/provide.dart';
 
+import 'package:charge/components/loading.dart';
+import 'package:charge/components/toast.dart';
 import 'package:charge/provide/theme_provide.dart';
+import 'package:charge/service/http_service.dart';
+import 'package:charge/tools/amapUtil.dart';
 
 import '../../config/index.dart';
 
@@ -20,9 +20,59 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   LatLng _latLng;
   AmapController _controller;
-  bool showMarker;
+  bool showMarker = false;
   Map markInfo;
   List<Marker> _markers = [];
+  List<Map> bannerList = [
+    {"label": '运行', "value": 306, "color": Colors.green},
+    {"label": '停机', "value": 54, "color": Colors.grey},
+    {"label": '异常', "value": 7, "color": Colors.yellow},
+    {"label": '报警', "value": 8, "color": Colors.red}
+  ];
+
+  /// 地图创建完成
+  Future<void> _onMapCreated(AmapController controller) async {
+    _controller = controller;
+    //地图按中心点缩放
+    await _controller?.setZoomByCenter(true);
+    //开始定位
+    await _controller?.showMyLocation(
+        MyLocationOption(show: true, myLocationType: MyLocationType.Rotate));
+    //获取定位位置
+    final latLng = await _controller?.getLocation();
+    _latLng = latLng;
+    _initData();
+    //设置中心点为当前定位位置
+    await _controller
+        ?.setCenterCoordinate(LatLng(latLng.latitude, latLng.longitude));
+  }
+
+  /// marker列表创建
+  void createMarkerList(List<Map> dataList) async {
+    List markers = [];
+    for (int i = 0; i < dataList.length; i++) {
+      Map item = dataList[i];
+      final marker = await _controller?.addMarker(MarkerOption(
+          latLng: LatLng(item["latitude"], item["longitude"]),
+          iconProvider: AssetImage('asset/images/mark_red.png'),
+          title: '北京',
+          // snippet: '中国的首都北京，欢迎来到北京',
+          object: json.encode({
+            "latitude": _latLng.latitude - 0.5,
+            "longitude": _latLng.longitude - 0.5
+          })));
+      //给点标记增加点击事件监听
+      await _controller?.setMarkerClickedListener((marker) async {
+        marker.object.then((value) {
+          _setMarkInfo(json.decode(value));
+          _setShowMarker(true);
+        });
+      });
+      //把点标记存储起来
+      markers.add(marker);
+    }
+    _markers = markers;
+  }
 
   /// marker的展示或隐藏
   void _setShowMarker(bool boo) {
@@ -78,45 +128,7 @@ class _MapPageState extends State<MapPage> {
                       children: <Widget>[
                         AmapView(
                           // 地图View创建完成回调
-                          onMapCreated: (controller) async {
-                            _controller = controller;
-                            //地图按中心点缩放
-                            await _controller?.setZoomByCenter(true);
-                            //开始定位
-                            await _controller?.showMyLocation(MyLocationOption(
-                                show: true,
-                                myLocationType: MyLocationType.Locate));
-                            //获取定位位置
-                            final latLng = await _controller?.getLocation();
-                            _latLng = latLng;
-                            _initData();
-                            //设置中心点为当前定位位置
-                            await _controller?.setCenterCoordinate(
-                                LatLng(latLng.latitude, latLng.longitude));
-                            //添加marker点
-                            final marker = await _controller.addMarker(
-                                MarkerOption(
-                                    latLng: LatLng(
-                                        latLng.latitude, latLng.longitude),
-                                    iconProvider:
-                                        AssetImage('asset/images/mark_red.png'),
-                                    title: '北京',
-                                    // snippet: '中国的首都北京，欢迎来到北京',
-                                    object: json.encode({
-                                      "latitude": latLng.latitude - 0.5,
-                                      "longitude": latLng.longitude - 0.5
-                                    })));
-                            //给点标记增加点击事件监听
-                            await _controller
-                                ?.setMarkerClickedListener((marker) async {
-                              marker.object.then((value) {
-                                _setMarkInfo(json.decode(value));
-                                _setShowMarker(true);
-                              });
-                            });
-                            //把点标记存储起来
-                            _markers.add(marker);
-                          },
+                          onMapCreated: _onMapCreated,
                           //地图类型
                           mapType: MapType.Standard,
                           // 是否显示SDK自带的缩放控件，如果你有自定义缩放控件的需求，就隐藏之。
@@ -152,50 +164,22 @@ class _MapPageState extends State<MapPage> {
                           maskDelay: Duration(milliseconds: 500),
                         ),
                         // 地图工具条
-                        Positioned(
-                            right: 5,
-                            bottom: 30,
-                            width: 50,
-                            height: 100,
-                            child: DecoratedColumn(
-                                // color: Colors.red,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
-                                children: <Widget>[
-                                  Container(
-                                      width: 50,
-                                      height: 50,
-                                      child: InkWell(
-                                        child: Icon(Icons.add),
-                                        onTap: () {
-                                          _controller?.zoomIn();
-                                        },
-                                      ),
-                                      decoration: BoxDecoration(
-                                          border: Border(
-                                              bottom: BorderSide(
-                                                  color: Color.fromRGBO(
-                                                      0, 0, 0, 0.1))))),
-                                  Container(
-                                      width: 50,
-                                      height: 50,
-                                      child: InkWell(
-                                        child: Icon(Icons.remove),
-                                        onTap: () {
-                                          _controller?.zoomOut();
-                                        },
-                                      ))
-                                ])),
+                        _MapTools(onPlusChange: () {
+                          _controller?.zoomIn();
+                        }, onCutChange: () {
+                          _controller?.zoomOut();
+                        }),
+
                         // 底部站点弹框
-                        BuildMarkInfoWidget(
+                        _MarkInfoWidget(
                             show: showMarker,
                             markInfo: markInfo,
                             currentTheme: currentTheme,
                             onHideMartInfo: () {
                               _setShowMarker(false);
                             }),
+                        //左侧总面板
+                        _LeftInfoWidget(dataList: bannerList),
                       ],
                     ));
               },
@@ -205,16 +189,82 @@ class _MapPageState extends State<MapPage> {
   }
 }
 
-/// 站点信息面板展示
-// ignore: must_be_immutable
-class BuildMarkInfoWidget extends StatelessWidget {
+/// 自定义地图工具条
+class _MapTools extends StatelessWidget {
+  final onPlusChange;
+  final onCutChange;
+  _MapTools({
+    Key key,
+    this.onPlusChange,
+    this.onCutChange,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+        right: 5,
+        bottom: 30,
+        width: 50,
+        height: 100,
+        child: DecoratedColumn(
+            // color: Colors.red,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(5))),
+            children: <Widget>[
+              Container(
+                  width: 50,
+                  height: 50,
+                  child: InkWell(child: Icon(Icons.add), onTap: onPlusChange),
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                              color: Color.fromRGBO(0, 0, 0, 0.1))))),
+              Container(
+                  width: 50,
+                  height: 50,
+                  child: InkWell(child: Icon(Icons.remove), onTap: onCutChange))
+            ]));
+  }
+}
+
+// 左侧总面板
+class _LeftInfoWidget extends StatelessWidget {
+  final List<Map> dataList;
+  _LeftInfoWidget({Key key, this.dataList}) : super(key: key);
+  // 左侧每一个
+  Widget buildLeftItem(BuildContext context, Map itemInfo) {
+    return Container(child: Text(itemInfo['label']));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> _list = new List();
+    dataList.forEach((element) {
+      _list.add(buildLeftItem(context, element));
+    });
+    return Positioned(
+        left: 0,
+        width: 50,
+        height: 200,
+        child: Container(
+            height: 200,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            child: ListView(children: _list)));
+  }
+}
+
+// 站点信息面板展示
+class _MarkInfoWidget extends StatelessWidget {
   // 接收父级参数定义
-  bool show;
-  Map markInfo;
-  Map currentTheme;
+  final bool show;
+  final Map markInfo;
+  final Map currentTheme;
   final onHideMartInfo;
   // 构造函数
-  BuildMarkInfoWidget(
+  _MarkInfoWidget(
       {Key key,
       this.show,
       this.markInfo,
