@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:charge/config/amap.dart';
 import 'package:charge/tools/permission.dart';
@@ -8,6 +10,7 @@ import './config/index.dart';
 import './provide/theme_provide.dart';
 import './provide/currnet_index_provide.dart';
 import './pages/logins/login_page.dart';
+import 'package:flutter/services.dart';
 
 // ignore: missing_return
 Future<void> main() {
@@ -29,6 +32,15 @@ void realRunApp() async {
     ..provide(Provider<CurrentIndexProvide>.value(currentIndexProvide))
     ..provide(Provider<ThemeProvide>.value(themeProvide));
   runApp(ProviderNode(child: MyApp(), providers: providers));
+  // 状态栏设置
+  if (Platform.isAndroid) {
+    // 这一步设置状态栏颜色为透明
+    SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark);
+    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+  }
   //高德地图初始化-ios
   await AmapService.init(
       iosKey: KMap.iosKey,
@@ -41,6 +53,7 @@ void realRunApp() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
     return ProvideMulti(
       requestedValues: [ThemeProvide],
       builder: (context, child, model) {

@@ -137,7 +137,7 @@ class _UserInfoWidget extends State<UserInfoWidget> {
                                 children: [
                                   Padding(
                                       padding: EdgeInsets.only(top: 5),
-                                      child: Text('陈高峰',
+                                      child: Text('李海涛',
                                           style: TextStyle(
                                               color: Color.fromRGBO(
                                                   255, 255, 255, 1),
