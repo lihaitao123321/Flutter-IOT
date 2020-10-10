@@ -41,19 +41,13 @@ void realRunApp() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // String lastThemeIndex = SpUtil.getString("lastThemeIndex", defValue: '666');
-    // LogUtil.e("userName: " + lastThemeIndex);
     return ProvideMulti(
       requestedValues: [ThemeProvide],
       builder: (context, child, model) {
-        int lastIndex = -1;
-        String lastThemeIndex = SpUtil.preferences.getString("lastThemeIndex");
-        if (lastThemeIndex != null && lastThemeIndex.isNotEmpty) {
-          lastIndex = int.parse(lastThemeIndex);
-        }
-        int currentIndex = model.get<ThemeProvide>().currentIndex;
-        if (currentIndex != lastIndex) {
-          model.get<ThemeProvide>().changeTheme(lastIndex);
+        String lastThemeValue = SpUtil.preferences.getString("lastThemeValue");
+        String currentThemeValue = model.get<ThemeProvide>().currentThemeValue;
+        if (currentThemeValue != lastThemeValue) {
+          model.get<ThemeProvide>().changeTheme(lastThemeValue);
         }
         Map currentTheme = model.get<ThemeProvide>().currentTheme;
         return Container(
@@ -62,7 +56,7 @@ class MyApp extends StatelessWidget {
                 debugShowCheckedModeBanner: true,
                 //主题
                 theme: ThemeData(
-                  primaryColor: currentTheme['primaryColor'],
+                  primaryColor: currentTheme['color'],
                 ),
                 home: LoginPage()));
       },

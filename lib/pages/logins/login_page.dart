@@ -47,7 +47,6 @@ class _LoginPageState extends State<LoginPage> {
       } else if (data['num'] == "1") {
         setLocalStorage('userInfo', data);
         setLocalStorage('token', data["token"]);
-        setLocalStorage('lastThemeIndex', 1.toString());
         toast.success("登录成功");
         Future.delayed(Duration(milliseconds: 1000), () {
           Navigator.push(context,
@@ -158,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                               height: 44,
                               margin: EdgeInsets.fromLTRB(0, 55, 0, 0),
                               child: RaisedButton(
-                                color: currentTheme['primaryColor'],
+                                color: currentTheme['color'],
                                 textColor: Colors.white,
                                 child: Text('登录'),
                                 onPressed: () => {_login()},

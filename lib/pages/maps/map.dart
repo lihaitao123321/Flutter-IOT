@@ -309,7 +309,7 @@ class _MarkInfoWidget extends StatelessWidget {
                                   width: 70,
                                   height: 28,
                                   decoration: BoxDecoration(
-                                      color: currentTheme['primaryColor'],
+                                      color: currentTheme['color'],
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(14))),
                                   child: Row(

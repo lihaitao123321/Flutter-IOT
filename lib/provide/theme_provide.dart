@@ -3,25 +3,23 @@ import '../config/color.dart';
 import '../tools/localStorage.dart';
 
 class ThemeProvide with ChangeNotifier {
-  int currentIndex = 1;
+  String currentThemeValue = '0';
   Map currentTheme = {"primaryColor": KColor.primaryColor};
   List<Map> themeSelectList = [
-    {"label": '屎黄色', "value": Color.fromRGBO(132, 95, 63, 1.0), "index": 1},
-    {"label": '蓝色', "value": Colors.blue, "index": 2},
-    {"label": '红色', "value": Colors.red, "index": 3},
+    {"label": '屎黄色', "color": Color.fromRGBO(132, 95, 63, 1.0), "value": '0'},
+    {"label": '蓝色', "color": Colors.blue, "value": '1'},
+    {"label": '红色', "color": Colors.red, "value": '2'},
   ];
 
   /// 改变主题
-  changeTheme(int index) {
-    currentIndex = index;
-    if (currentIndex == 1) {
-      currentTheme = {"primaryColor": KColor.primaryColor};
-    } else if (currentIndex == 2) {
-      currentTheme = {"primaryColor": Colors.blue};
-    } else if (currentIndex == 3) {
-      currentTheme = {"primaryColor": Colors.red};
+  changeTheme(String value) {
+    currentThemeValue = value;
+    for (int i = 0; i < themeSelectList.length; i++) {
+      if (themeSelectList[i]['value'] == value) {
+        currentTheme = themeSelectList[i];
+      }
     }
-    setLocalStorage('lastThemeIndex', currentIndex.toString());
+    setLocalStorage('lastThemeValue', currentThemeValue);
     notifyListeners();
   }
 }
