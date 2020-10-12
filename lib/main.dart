@@ -2,9 +2,12 @@ import 'dart:io';
 
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:charge/config/amap.dart';
+import 'package:charge/generated/l10n.dart';
+import 'package:charge/provide/lang_provide.dart';
 import 'package:charge/tools/permission.dart';
 import 'package:charge/tools/spUtil.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provide/provide.dart';
 import './config/index.dart';
 import './provide/theme_provide.dart';
@@ -27,25 +30,23 @@ void realRunApp() async {
   await SpUtil.getInstance();
   var currentIndexProvide = CurrentIndexProvide();
   var themeProvide = ThemeProvide();
+  var langProvide = LangProvide();
   var providers = Providers();
   providers
     ..provide(Provider<CurrentIndexProvide>.value(currentIndexProvide))
-    ..provide(Provider<ThemeProvide>.value(themeProvide));
+    ..provide(Provider<ThemeProvide>.value(themeProvide))
+    ..provide(Provider<LangProvide>.value(langProvide));
   runApp(ProviderNode(child: MyApp(), providers: providers));
   // 状态栏设置
   if (Platform.isAndroid) {
     // 这一步设置状态栏颜色为透明
-    SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark);
+    SystemUiOverlayStyle systemUiOverlayStyle =
+        SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.dark);
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
   }
   //高德地图初始化-ios
-  await AmapService.init(
-      iosKey: KMap.iosKey,
-      androidKey: KMap.androidKey,
-      webApiKey: KMap.webApiKey);
+  await AmapService.init(iosKey: KMap.iosKey, androidKey: KMap.androidKey, webApiKey: KMap.webApiKey);
   KPermission.check();
 }
 
@@ -71,6 +72,17 @@ class MyApp extends StatelessWidget {
                 theme: ThemeData(
                   primaryColor: currentTheme['color'],
                 ),
+                localizationsDelegates: const [
+                  S.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate
+                ],
+                supportedLocales: S.delegate.supportedLocales,
+                localeListResolutionCallback: (locales, supportedLocales) {
+                  print(locales);
+                  return;
+                },
                 home: LoginPage()));
       },
     );
