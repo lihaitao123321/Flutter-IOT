@@ -48,6 +48,7 @@ dependencies:
   amap_all_fluttify: ^0.17.0
   decorated_flutter: ^0.17.0
   permission_handler: ^5.0.1+1
+  qrscan: ^0.2.16
 dev_dependencies:
   flutter_test:
     sdk: flutter

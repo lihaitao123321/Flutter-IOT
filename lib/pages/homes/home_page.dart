@@ -6,6 +6,7 @@ import 'package:charge/pages/homes/home_search.dart';
 import './components/searchBar.dart';
 import './components/wrapBlock.dart';
 import 'components/barChart.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 
 class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
@@ -38,6 +39,11 @@ class _HomePageState extends State<HomePage> {
       "icon": "",
     }
   ];
+  void _toggleScan() async {
+    String photoScanResult = await scanner.scan();
+    print('打印扫码结果=>' + photoScanResult);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ProvideMulti(
@@ -46,16 +52,16 @@ class _HomePageState extends State<HomePage> {
           return Scaffold(
             // appBar: serachBar(context),
             appBar: AppBar(
-              leading:
-                  IconButton(icon: Icon(Icons.color_lens), onPressed: () {}),
+              leading: IconButton(icon: Icon(Icons.color_lens), onPressed: () {}),
               title: serachBar(context, '某某智能运维云服务系统', () {
-                Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (context) => HomeSearchPage()));
+                Navigator.push(context, new MaterialPageRoute(builder: (context) => HomeSearchPage()));
               }),
               actions: <Widget>[
-                IconButton(icon: Icon(Icons.camera), onPressed: () {})
+                IconButton(
+                    icon: Icon(Icons.camera),
+                    onPressed: () {
+                      _toggleScan();
+                    })
               ],
             ),
             backgroundColor: KColor.backgroundColor,
