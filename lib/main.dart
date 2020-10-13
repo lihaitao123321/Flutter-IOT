@@ -61,12 +61,22 @@ class MyApp extends StatelessWidget {
         String lastThemeValue = SpUtil.preferences.getString("lastThemeValue");
         String currentThemeValue = model.get<ThemeProvide>().currentThemeValue;
         if (currentThemeValue != lastThemeValue) {
-          model.get<ThemeProvide>().changeTheme(lastThemeValue);
+          if (lastThemeValue != null) {
+            model.get<ThemeProvide>().changeTheme(lastThemeValue);
+          } else {
+            model.get<ThemeProvide>().changeTheme('0');
+          }
         }
         Map currentTheme = model.get<ThemeProvide>().currentTheme;
         //设置默认主题
         String lastLangValue = SpUtil.preferences.getString("lastLangValue");
-        S.load(Locale(lastLangValue.split('_')[0]));
+        print(666666);
+        print(lastLangValue);
+        if (lastLangValue != null && lastLangValue.isNotEmpty) {
+          S.load(Locale(lastLangValue.split('_')[0]));
+        } else {
+          S.load(Locale('zh', 'CN'));
+        }
         return Container(
             child: MaterialApp(
                 title: KString.mainTitle, //通用主标题
