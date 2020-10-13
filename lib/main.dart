@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
     return ProvideMulti(
-      requestedValues: [ThemeProvide],
+      requestedValues: [ThemeProvide, LangProvide],
       builder: (context, child, model) {
         String lastThemeValue = SpUtil.preferences.getString("lastThemeValue");
         String currentThemeValue = model.get<ThemeProvide>().currentThemeValue;
@@ -64,6 +64,9 @@ class MyApp extends StatelessWidget {
           model.get<ThemeProvide>().changeTheme(lastThemeValue);
         }
         Map currentTheme = model.get<ThemeProvide>().currentTheme;
+        //设置默认主题
+        String lastLangValue = SpUtil.preferences.getString("lastLangValue");
+        S.load(Locale(lastLangValue.split('_')[0]));
         return Container(
             child: MaterialApp(
                 title: KString.mainTitle, //通用主标题
