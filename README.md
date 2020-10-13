@@ -8,3 +8,4 @@
 ##### 6. 高德地图(地图插件使用，定位、打开高德地图app导航、白名单配置等)  
 ##### 7. 主题切换(结合provide使用)  
 ##### 8. 异步SharedPreferences支持同步获取  
+##### 9. 国际化、本地化支持 flutter_localizations  
