@@ -9,3 +9,4 @@
 ##### 7. 主题切换(结合provide使用)  
 ##### 8. 异步SharedPreferences支持同步获取  
 ##### 9. 国际化、本地化支持 flutter_localizations  
+##### 10. 增加扫码功能  
