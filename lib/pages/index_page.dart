@@ -1,4 +1,3 @@
-import 'package:charge/config/index.dart';
 import 'package:charge/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import './homes/home_page.dart'; //首页

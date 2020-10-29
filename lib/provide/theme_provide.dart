@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import '../config/color.dart';
 import '../tools/localStorage.dart';
 
 class ThemeProvide with ChangeNotifier {
   String currentThemeValue = '0';
-  Map currentTheme = {"primaryColor": KColor.primaryColor};
+  Map currentTheme = {"label": '屎黄色', "color": Color.fromRGBO(132, 95, 63, 1.0), "value": '0'};
   List<Map> themeSelectList = [
     {"label": '屎黄色', "color": Color.fromRGBO(132, 95, 63, 1.0), "value": '0'},
     {"label": '蓝色', "color": Colors.blue, "value": '1'},

@@ -4,19 +4,11 @@ import 'package:permission_handler/permission_handler.dart';
 List<String> defaultList = ['camera', 'location'];
 
 class KPermission {
-  static check() async {
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.location,
+  static requestPermission() async {
+    [
       Permission.storage,
+      Permission.location,
+      Permission.camera,
     ].request();
-    // //存储权限
-    // if (await Permission.storage.isUndetermined) {
-    // }
-    // //定位权限获取
-    // if (await Permission.location.isUndetermined) {
-    // }
-    // //相机权限获取
-    // if (await Permission.camera.isUndetermined) {
-    // }
   }
 }

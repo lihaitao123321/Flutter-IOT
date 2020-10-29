@@ -82,7 +82,6 @@ class _UserInfoWidget extends State<UserInfoWidget> {
                       width: 70,
                       height: 70,
                       decoration: BoxDecoration(
-                          color: Colors.green,
                           borderRadius: BorderRadius.circular(35),
                           // 圆形图片
                           image: DecorationImage(

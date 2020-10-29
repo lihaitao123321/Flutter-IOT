@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import '../tools/localStorage.dart';
 
 class LangProvide with ChangeNotifier {
-  String currentLangValue = 'zh_CN';
+  String currentLangValue = 'zh';
   List<Map> langSelectList = [
-    {"label": '中文', "value": 'zh_CN'},
+    {"label": '中文', "value": 'zh'},
     {"label": 'English', "value": 'en'},
   ];
 
