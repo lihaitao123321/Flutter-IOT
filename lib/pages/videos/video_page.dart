@@ -1,6 +1,7 @@
 import 'package:charge/components/card/news.dart';
 import 'package:charge/components/scroll.dart';
 import 'package:charge/components/toast.dart';
+import 'package:charge/pages/videos/video_player.dart';
 import 'package:charge/provide/theme_provide.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class _ChewieDemoState extends State<VideoPage> {
     super.initState();
     for (int i = 0; i < 10; i++) {
       videos.add({
+        "id": i.toString(),
         "title": i.toString() + '江南皮革厂倒闭了。。。',
         "source": '江南大事件',
         "comments": i,
@@ -34,6 +36,7 @@ class _ChewieDemoState extends State<VideoPage> {
       List videoList = [];
       for (int i = 0; i < 10; i++) {
         videoList.add({
+          "id": i.toString(),
           "title": i.toString() + '江南皮革厂倒闭了。。。',
           "source": '江南大事件',
           "comments": i,
@@ -53,6 +56,7 @@ class _ChewieDemoState extends State<VideoPage> {
       int length = videos.length;
       for (int i = length; i < length + 10; i++) {
         videos.add({
+          "id": i.toString(),
           "title": i.toString() + '江南皮革厂倒闭了。。。',
           "source": '江南大事件',
           "comments": i,
@@ -72,15 +76,18 @@ class _ChewieDemoState extends State<VideoPage> {
         requestedValues: [ThemeProvide],
         builder: (context, child, model) {
           return Scaffold(
-              appBar: AppBar(
-                title: Text('视频列表'),
-              ),
               body: KScroll(
                   datasource: videos,
                   total: 50,
                   refreshFun: onRefresh,
                   loadFun: onLoad,
-                  itemBuilder: (con, index) => NewsCard(data: videos[index])));
+                  itemBuilder: (con, index) => NewsCard(
+                      key: UniqueKey(),
+                      data: videos[index],
+                      onTapCallback: (res) {
+                        Navigator.push(
+                            context, new MaterialPageRoute(builder: (context) => new VideoDetial(id: res["id"])));
+                      })));
         });
   }
 }

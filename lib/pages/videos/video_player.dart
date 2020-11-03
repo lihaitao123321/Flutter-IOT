@@ -1,21 +1,18 @@
 import 'package:chewie/chewie.dart';
-import 'package:chewie/src/chewie_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-class VideoList extends StatefulWidget {
-  VideoList({this.title = 'Chewie Demo'});
-
-  final String title;
-
+class VideoDetial extends StatefulWidget {
+  VideoDetial({Key key, this.id}) : super(key: key);
+  final String id;
   @override
   State<StatefulWidget> createState() {
     return _ChewieDemoState();
   }
 }
 
-class _ChewieDemoState extends State<VideoList> {
+class _ChewieDemoState extends State<VideoDetial> {
   VideoPlayerController _videoPlayerController1;
   ChewieController _chewieController;
 
@@ -27,7 +24,7 @@ class _ChewieDemoState extends State<VideoList> {
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController1,
       aspectRatio: 3 / 2,
-      autoPlay: false,
+      autoPlay: true,
       looping: false,
       // Try playing around with some of these other options:
 
@@ -41,7 +38,7 @@ class _ChewieDemoState extends State<VideoList> {
       // placeholder: Container(
       //   color: Colors.grey,
       // ),
-      // autoInitialize: true,
+      autoInitialize: true,
     );
   }
 
@@ -56,7 +53,7 @@ class _ChewieDemoState extends State<VideoList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('视频详情' + widget.id),
       ),
       body: Column(
         children: <Widget>[
