@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "home_tab_title" : MessageLookupByLibrary.simpleMessage("Home"),
     "lang_title" : MessageLookupByLibrary.simpleMessage("Multi language switching"),
     "map_tab_title" : MessageLookupByLibrary.simpleMessage("Map"),
-    "member_tab_title" : MessageLookupByLibrary.simpleMessage("Member")
+    "member_tab_title" : MessageLookupByLibrary.simpleMessage("Member"),
+    "video_tab_title" : MessageLookupByLibrary.simpleMessage("Video")
   };
 }

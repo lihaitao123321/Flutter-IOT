@@ -33,27 +33,25 @@ class _LoginPageState extends State<LoginPage> {
     Loading loading = Loading(context);
     loading.show();
     String password = await KRsa.encryption(pwd);
-    KToast toast = KToast();
     // ignore: missing_return
     request('login', {"telephone": phone, "passwd": password}).then((data) {
       loading.close();
       if (data['status'] == "1") {
-        toast.error("账号或密码错误");
+        KToast.error("账号或密码错误");
         return false;
       }
       if (data['num'] == "0") {
-        toast.warning("当前用户未绑定所属公司，请联系管理员!");
+        KToast.warning("当前用户未绑定所属公司，请联系管理员!");
         return false;
       } else if (data['num'] == "1") {
         setLocalStorage('userInfo', data);
         setLocalStorage('token', data["token"]);
-        toast.success("登录成功");
+        KToast.success("登录成功");
         Future.delayed(Duration(milliseconds: 1000), () {
-          Navigator.push(context,
-              new MaterialPageRoute(builder: (context) => new IndexPage()));
+          Navigator.push(context, new MaterialPageRoute(builder: (context) => new IndexPage()));
         });
       } else {
-        toast.error("登录异常，请稍后再试");
+        KToast.error("登录异常，请稍后再试");
       }
     });
   }
@@ -85,10 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: 260,
                       child: Center(
                         child: Image(
-                            width: 100,
-                            height: 100,
-                            fit: BoxFit.cover,
-                            image: AssetImage('asset/images/girl.jpeg')),
+                            width: 100, height: 100, fit: BoxFit.cover, image: AssetImage('asset/images/girl.jpeg')),
                       ),
                     ),
                     Padding(
@@ -98,15 +93,11 @@ class _LoginPageState extends State<LoginPage> {
                           Container(
                               decoration: BoxDecoration(
                                   border: Border(
-                                bottom: BorderSide(
-                                    style: BorderStyle.solid,
-                                    width: 1,
-                                    color: Color.fromRGBO(0, 0, 0, 0.1)),
+                                bottom:
+                                    BorderSide(style: BorderStyle.solid, width: 1, color: Color.fromRGBO(0, 0, 0, 0.1)),
                               )),
                               child: Row(children: <Widget>[
-                                Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 0, 23, 0),
-                                    child: Icon(Icons.phone_iphone)),
+                                Padding(padding: EdgeInsets.fromLTRB(0, 0, 23, 0), child: Icon(Icons.phone_iphone)),
                                 Expanded(
                                     child: TextField(
                                         decoration: InputDecoration(
@@ -119,23 +110,17 @@ class _LoginPageState extends State<LoginPage> {
                                           _togglePhoneChange(text);
                                         },
                                         controller:
-                                            TextEditingController.fromValue(
-                                                TextEditingValue(
-                                                    text: this.phone))))
+                                            TextEditingController.fromValue(TextEditingValue(text: this.phone))))
                               ])),
                           Container(
                               margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
                               decoration: BoxDecoration(
                                   border: Border(
-                                bottom: BorderSide(
-                                    style: BorderStyle.solid,
-                                    width: 1,
-                                    color: Color.fromRGBO(0, 0, 0, 0.1)),
+                                bottom:
+                                    BorderSide(style: BorderStyle.solid, width: 1, color: Color.fromRGBO(0, 0, 0, 0.1)),
                               )),
                               child: Row(children: <Widget>[
-                                Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 0, 23, 0),
-                                    child: Icon(Icons.lock)),
+                                Padding(padding: EdgeInsets.fromLTRB(0, 0, 23, 0), child: Icon(Icons.lock)),
                                 Expanded(
                                     child: TextField(
                                         decoration: InputDecoration(
@@ -147,10 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                                         onChanged: (text) {
                                           _togglePasswordChange(text);
                                         },
-                                        controller:
-                                            TextEditingController.fromValue(
-                                                TextEditingValue(
-                                                    text: this.pwd))))
+                                        controller: TextEditingController.fromValue(TextEditingValue(text: this.pwd))))
                               ])),
                           Container(
                               width: 400,
@@ -166,18 +148,15 @@ class _LoginPageState extends State<LoginPage> {
                               width: 400,
                               margin: EdgeInsets.fromLTRB(0, 26, 0, 0),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text(
                                     '忘记密码？',
-                                    style: new TextStyle(
-                                        color: KColor.disabledColor),
+                                    style: new TextStyle(color: KColor.disabledColor),
                                   ),
                                   Text(
                                     '新用户注册>',
-                                    style: new TextStyle(
-                                        color: KColor.primaryColor),
+                                    style: new TextStyle(color: KColor.primaryColor),
                                   )
                                 ],
                               ))

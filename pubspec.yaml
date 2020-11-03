@@ -49,6 +49,8 @@ dependencies:
   decorated_flutter: ^0.17.0
   permission_handler: ^5.0.1+1
   qrscan: ^0.2.16
+  video_player: ^0.10.12+5
+  chewie: ^0.9.10
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -59,7 +61,7 @@ dev_dependencies:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
-flutter:
+flutter: 
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -68,9 +70,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - asset/media/
     - asset/images/
     - asset/images/member/
     - keys/
+    - lib/mock/resource/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

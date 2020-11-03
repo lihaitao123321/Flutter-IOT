@@ -5,10 +5,6 @@ List<String> defaultList = ['camera', 'location'];
 
 class KPermission {
   static requestPermission() async {
-    [
-      Permission.storage,
-      Permission.location,
-      Permission.camera,
-    ].request();
+    [Permission.storage, Permission.location, Permission.camera].request();
   }
 }

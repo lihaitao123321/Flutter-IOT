@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "home_tab_title" : MessageLookupByLibrary.simpleMessage("主页"),
     "lang_title" : MessageLookupByLibrary.simpleMessage("多语言切换"),
     "map_tab_title" : MessageLookupByLibrary.simpleMessage("地图"),
-    "member_tab_title" : MessageLookupByLibrary.simpleMessage("会员中心")
+    "member_tab_title" : MessageLookupByLibrary.simpleMessage("会员中心"),
+    "video_tab_title" : MessageLookupByLibrary.simpleMessage("视频")
   };
 }

@@ -1,4 +1,4 @@
-import 'package:charge/model/Shop.dart';
+import 'package:charge/model/shop.dart';
 import 'package:charge/model/product.dart';
 import 'package:flutter/material.dart';
 

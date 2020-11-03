@@ -54,5 +54,11 @@
 		<string>qqmap</string>
 		<string>baidumap</string>
 	</array>
+	<!-- 视频播放 -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

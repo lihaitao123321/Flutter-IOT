@@ -55,6 +55,16 @@ class S {
     );
   }
 
+  /// `Video`
+  String get video_tab_title {
+    return Intl.message(
+      'Video',
+      name: 'video_tab_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Map`
   String get map_tab_title {
     return Intl.message(

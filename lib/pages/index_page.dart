@@ -2,6 +2,7 @@ import 'package:charge/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import './homes/home_page.dart'; //首页
 import './maps/map.dart'; //地图
+import './videos/video_page.dart'; //地图
 import 'cart_page.dart'; //购物车
 import 'member_center/member_page.dart'; //会员中心
 import 'package:provide/provide.dart';
@@ -18,6 +19,9 @@ class IndexPage extends StatelessWidget {
               label: S.of(context).home_tab_title, //首页
               icon: Icon(Icons.home)),
           BottomNavigationBarItem(
+              label: S.of(context).video_tab_title, //视频
+              icon: Icon(Icons.video_call)),
+          BottomNavigationBarItem(
               label: S.of(context).map_tab_title, //地图
               icon: Icon(Icons.location_on)),
           BottomNavigationBarItem(
@@ -27,7 +31,7 @@ class IndexPage extends StatelessWidget {
               label: S.of(context).member_tab_title, //会员中心
               icon: Icon(Icons.person)),
         ];
-        final List<Widget> tabBodies = [HomePage(), MapPage(), CartPage(), MemberPage()];
+        final List<Widget> tabBodies = [HomePage(), VideoPage(), MapPage(), CartPage(), MemberPage()];
         //取到当前索引值
         int currentIndex = model.get<CurrentIndexProvide>().currentIndex;
         return Scaffold(

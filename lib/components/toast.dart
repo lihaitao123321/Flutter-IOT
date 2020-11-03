@@ -6,7 +6,7 @@ class KToast {
   KToast();
 
   ///打开loading
-  void success(text) {
+  static void success(text) {
     Fluttertoast.showToast(
         msg: text,
         toastLength: Toast.LENGTH_SHORT,
@@ -17,7 +17,7 @@ class KToast {
         fontSize: 16.0);
   }
 
-  void error(text) {
+  static void error(text) {
     Fluttertoast.showToast(
         msg: text,
         toastLength: Toast.LENGTH_SHORT,
@@ -28,7 +28,7 @@ class KToast {
         fontSize: 16.0);
   }
 
-  void warning(text) {
+  static void warning(text) {
     Fluttertoast.showToast(
         msg: text,
         toastLength: Toast.LENGTH_SHORT,
