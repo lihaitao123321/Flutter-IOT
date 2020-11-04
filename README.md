@@ -8,7 +8,7 @@
 #####  * json转换(数据接口返回的json处理)  
 #####  * echarts(图表插件使用)    
 #####  * 高德地图(地图插件使用，定位、打开高德地图app导航、白名单和权限配置等)  
-#####  * 主题切换(结合provide使用)  
+#####  * 主题切换(结合provide)  
 #####  * 异步SharedPreferences支持同步获取  
 #####  * 国际化、本地化支持 flutter_localizations  
 #####  * 扫码功能  
