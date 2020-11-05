@@ -1,4 +1,5 @@
 import 'package:charge/generated/l10n.dart';
+import 'package:charge/util/global.dart';
 import 'package:flutter/material.dart';
 import './homes/home_page.dart'; //首页
 import './maps/map.dart'; //地图
@@ -11,6 +12,8 @@ import '../provide/currnet_index_provide.dart';
 class IndexPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // 设置顶层appContext
+    Application.appContext = context;
     return ProvideMulti(
       requestedValues: [CurrentIndexProvide],
       builder: (context, child, model) {

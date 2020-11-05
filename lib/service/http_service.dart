@@ -1,4 +1,5 @@
 import 'package:charge/tools/spUtil.dart';
+import 'package:charge/util/global.dart';
 import 'package:dio/dio.dart';
 import 'dart:async';
 import '../config/index.dart';
@@ -8,7 +9,6 @@ import 'dart:io';
 Future<Map> request(serveName, formData) async {
   try {
     String token = SpUtil.preferences.getString("token");
-    print(token);
     if (token == null) {
       token = "";
     }
@@ -25,10 +25,12 @@ Future<Map> request(serveName, formData) async {
     if (response.statusCode == HttpStatus.ok) {
       Map data = json.decode(response.data.toString());
       return data;
-    } else {
-      throw Exception('请求失败');
     }
+    return {};
   } catch (e) {
-    throw Exception('后台请求异常...');
+    if (e.response.statusCode == 401) {
+      Application.router.navigateTo(Application.appContext, '/login');
+    }
+    // throw Exception('后台请求异常...');
   }
 }
