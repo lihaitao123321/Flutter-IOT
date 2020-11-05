@@ -4,7 +4,7 @@ import '../tools/localStorage.dart';
 class LangProvide with ChangeNotifier {
   String currentLangValue = 'zh';
   List<Map> langSelectList = [
-    {"label": '中文', "value": 'zh'},
+    {"label": '中文', "value": 'zh_CN'},
     {"label": 'English', "value": 'en'},
   ];
 

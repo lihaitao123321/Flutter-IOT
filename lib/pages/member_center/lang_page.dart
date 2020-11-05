@@ -11,12 +11,18 @@ class LangPage extends StatefulWidget {
 
 class _LangPageState extends State {
   bool check = false;
-  String _langValue = Intl.getCurrentLocale();
+  String _langValue;
+  @override
+  void initState() {
+    super.initState();
+    var local = Intl.getCurrentLocale();
+    setState(() {
+      _langValue = local;
+    });
+  }
 
   /// `更改语言环境
   void _toggleLangChange(value, [model]) async {
-    print(value);
-    print(model);
     setState(() {
       _langValue = value;
     });
@@ -27,12 +33,12 @@ class _LangPageState extends State {
       if (list.length > 1) {
         country = value.split('_')[1];
       }
-      print('修改前语言环境:${Intl.getCurrentLocale()}');
+      // print('修改前语言环境:${Intl.getCurrentLocale()}');
       await S.load(Locale(lang, country));
       Future.delayed(Duration(milliseconds: 1000), () {
         S.load(Locale(lang, country));
       });
-      print('修改后语言环境:${Intl.getCurrentLocale()}');
+      // print('修改后语言环境:${Intl.getCurrentLocale()}');
       model.get<LangProvide>().changeLang(value);
     }
   }
@@ -40,7 +46,6 @@ class _LangPageState extends State {
   @override
   Widget build(BuildContext context) {
     print('当前语言环境:${Intl.getCurrentLocale()}');
-    ScreenUtil.init(context, width: 750, height: 1334);
     return ProvideMulti(
         requestedValues: [LangProvide],
         builder: (context, child, model) {

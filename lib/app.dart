@@ -49,10 +49,6 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate
           ],
           supportedLocales: S.delegate.supportedLocales,
-          localeListResolutionCallback: (locales, supportedLocales) {
-            // print(locales);
-            return;
-          },
           onGenerateRoute: Application.router.generator,
           // home: LoginPage()
         ));
