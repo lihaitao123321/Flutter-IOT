@@ -12,8 +12,8 @@ var loginHandler = new Handler(handlerFunc: (BuildContext context, Map<String, L
 var indexHandler = new Handler(handlerFunc: (BuildContext context, Map<String, List<Object>> params) {
   return IndexPage();
 });
-var videoDetialHandler = new Handler(handlerFunc: (BuildContext context, Map params) {
-  return VideoDetial(id: params["id"]);
+var videoDetialHandler = new Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return VideoDetial(id: params["id"][0]);
 });
 var langHandler = new Handler(handlerFunc: (BuildContext context, Map<String, List<Object>> params) {
   return LangPage();
