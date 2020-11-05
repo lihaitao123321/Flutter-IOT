@@ -1,8 +1,10 @@
 import 'package:charge/components/card/news.dart';
 import 'package:charge/components/scroll.dart';
 import 'package:charge/components/toast.dart';
-import 'package:charge/pages/videos/video_player.dart';
+import 'package:charge/pages/videos/video_detial_page.dart';
 import 'package:charge/provide/theme_provide.dart';
+import 'package:charge/router/routers_define.dart';
+import 'package:charge/util/global.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provide/provide.dart';
@@ -85,8 +87,15 @@ class _ChewieDemoState extends State<VideoPage> {
                       key: UniqueKey(),
                       data: videos[index],
                       onTapCallback: (res) {
-                        Navigator.push(
-                            context, new MaterialPageRoute(builder: (context) => new VideoDetial(id: res["id"])));
+                        Routes.navigateTo(
+                          context,
+                          '/video_detial',
+                          params: {
+                            'id': res["id"],
+                          },
+                        );
+                        // Navigator.push(
+                        //     context, new MaterialPageRoute(builder: (context) => new VideoDetial(id: res["id"])));
                       })));
         });
   }

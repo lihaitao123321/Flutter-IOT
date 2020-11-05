@@ -1,6 +1,4 @@
 import 'package:charge/config/index.dart';
-import 'package:charge/pages/member_center/lang_page.dart';
-import 'package:charge/pages/member_center/theme_page.dart';
 import 'package:charge/provide/theme_provide.dart';
 import 'package:charge/components/cell.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +16,8 @@ class MemberPage extends StatefulWidget {
     },
     {"icon": 'asset/images/member/lock.png', "title": '修改密码', "desc": '', "isLink": true},
     {"icon": 'asset/images/member/message.png', "title": '消息设置', "desc": '', "isLink": true},
-    {"icon": 'asset/images/member/language.png', "title": '语言类型', "desc": '', "isLink": true, "linkPage": LangPage()},
-    {"icon": 'asset/images/member/language.png', "title": '主题颜色', "desc": '', "isLink": true, "linkPage": ThemePage()},
+    {"icon": 'asset/images/member/language.png', "title": '语言类型', "desc": '', "isLink": true, "linkPage": '/lang'},
+    {"icon": 'asset/images/member/language.png', "title": '主题颜色', "desc": '', "isLink": true, "linkPage": '/theme'},
     {"icon": 'asset/images/member/clean.png', "title": '清除缓存', "desc": '', "isLink": true},
     {"icon": 'asset/images/member/version.png', "title": '版本介绍', "desc": '', "isLink": true},
     {"icon": 'asset/images/member/aboutUs.png', "title": '关于我们', "desc": '', "isLink": true},

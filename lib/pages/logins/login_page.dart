@@ -1,12 +1,11 @@
 import 'package:charge/provide/theme_provide.dart';
-import 'package:charge/tools/routerAnimate.dart';
+import 'package:charge/util/global.dart';
 import 'package:flutter/material.dart';
 import 'package:charge/config/color.dart';
 import 'package:charge/service/http_service.dart';
 import 'package:charge/tools/tools.dart';
 import 'package:charge/components/loading.dart';
 import 'package:charge/components/toast.dart';
-import 'package:charge/pages/index_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
 
@@ -49,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
         setLocalStorage('token', data["token"]);
         KToast.success("登录成功");
         Future.delayed(Duration(milliseconds: 1000), () {
-          Navigator.of(context).push(KRouteAnimate(IndexPage()));
+          Application.router.navigateTo(context, '/index');
         });
       } else {
         KToast.error("登录异常，请稍后再试");

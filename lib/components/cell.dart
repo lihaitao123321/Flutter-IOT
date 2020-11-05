@@ -1,4 +1,5 @@
 import 'package:charge/tools/routerAnimate.dart';
+import 'package:charge/util/global.dart';
 import 'package:flutter/material.dart';
 
 class CellGroups extends StatelessWidget {
@@ -54,7 +55,7 @@ class CellGroups extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   if (element["linkPage"] != null) {
-                    Navigator.of(context).push(KRouteAnimate(element["linkPage"]));
+                    Application.router.navigateTo(context, element["linkPage"]);
                   }
                 },
                 child: Row(

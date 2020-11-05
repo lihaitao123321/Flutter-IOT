@@ -1,9 +1,12 @@
 import 'dart:io';
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:charge/config/amap.dart';
-import 'package:charge/pages/app.dart';
+import 'package:charge/app.dart';
+import 'package:charge/router/routers_define.dart';
 import 'package:charge/tools/permission.dart';
 import 'package:charge/tools/spUtil.dart';
+import 'package:charge/util/global.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:provide/provide.dart';
 import './provide/index.dart';
@@ -11,6 +14,11 @@ import 'package:flutter/services.dart';
 
 // ignore: missing_return
 Future<void> main() {
+  FluroRouter router = FluroRouter();
+  // 注册路由
+  Routes.configureRoutes(router);
+  Routes.router = router;
+  Application.router = router;
   realRunApp();
 }
 
